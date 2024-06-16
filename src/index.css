@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Almaq';
+  src: url('./assets/fonts/almaq-rough.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'White on Black';
+  src: url('./assets/fonts/white-on-black.ttf') format('truetype');
+}

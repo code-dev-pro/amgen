@@ -6,11 +6,11 @@ import logo from '../assets/images/logo.svg';
 export const Home = () => {
   return (
     <div className="relative min-h-screen w-screen">
-      <img src={backgroundImage} alt="Mountain Path" className="absolute inset-0 h-full w-full object-cover" />
-      <div className="absolute top-8 right-8">
-        <img src={logo} alt="Logo" className="w-full min-w-[700px]" />
+      <img src={backgroundImage} alt="Montagne" className="absolute inset-0 h-full w-full object-cover" />
+      <div className="absolute top-12 right-12">
+        <img src={logo} alt="Logo" width={546} height={213} />
       </div>
-      <div className="absolute bottom-[35%] right-24">
+      <div className="absolute bottom-[291px] right-[86px]">
         <ExploreButton />
       </div>
       <Footer />

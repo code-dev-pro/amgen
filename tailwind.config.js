@@ -17,6 +17,7 @@ export default {
         'accent-red': '#C81806',
         'accent-purple': '#703684',
         'accent-brown': '#511F0D',
+        'accent-blue': '#00BCE4',
         'secondary-blue': '#003B8C',
       },
     },

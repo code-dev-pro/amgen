@@ -11,3 +11,7 @@
   font-family: 'White on Black';
   src: url('./assets/fonts/white-on-black.ttf') format('truetype');
 }
+
+body {
+  font-family: 'Noto Sans Variable', sans-serif;
+}

@@ -1,12 +1,11 @@
-import { CustomCheckbox } from './Checkbox';
-import { ValidateButton } from './buttons/ValidateButton';
+import { useState } from 'react';
 
-interface FormProps {
-  isChecked: boolean;
-  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { ValidateButton } from '../buttons/ValidateButton';
+import { CustomCheckbox } from '../Checkbox';
 
-export const Form = ({ isChecked, setIsChecked }: FormProps) => {
+export const Form = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };

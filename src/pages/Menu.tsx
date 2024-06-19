@@ -1,13 +1,15 @@
+import DOMPurify from 'dompurify';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
+import { Footer } from '../components/Footer';
+import { Popup } from '../components/popup/Popup';
+import { Form } from '../components/popup/Form';
+import { usePopupStore } from '../hooks/usePopupStore';
+
 import backgroundMenu from '../assets/images/fond_menu.jpg';
 import logo from '../assets/images/logo.svg';
 import homeIcon from '../assets/images/icon_home_off.svg';
 import mailIcon from '../assets/images/icon_mail_off.svg';
-import DOMPurify from 'dompurify';
-import clsx from 'clsx';
-import { Footer } from '../components/Footer';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Popup } from '../components/Popup';
 
 const data = [
   {
@@ -46,7 +48,7 @@ const Menu = () => {
     { top: '250px', left: '1020px' },
   ];
 
-  const [isPopupOpen, setPopupOpen] = useState(false);
+  const { isPopupOpen, setPopupOpen } = usePopupStore();
 
   const handleMailIconClick = () => {
     setPopupOpen(true);
@@ -102,7 +104,11 @@ const Menu = () => {
         ))}
       </div>
 
-      {isPopupOpen && <Popup setPopupOpen={setPopupOpen} />}
+      {isPopupOpen && (
+        <Popup>
+          <Form />
+        </Popup>
+      )}
 
       <Footer />
     </>

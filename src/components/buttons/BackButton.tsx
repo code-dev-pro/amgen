@@ -1,8 +1,7 @@
-interface PopupProps {
-  setPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { usePopupStore } from '../../hooks/usePopupStore';
 
-export const BackButton = ({ setPopupOpen }: PopupProps) => {
+export const BackButton = () => {
+  const { setPopupOpen } = usePopupStore();
   return (
     <button className="flex items-center" onClick={() => setPopupOpen(false)}>
       <svg width="20" height="20" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">

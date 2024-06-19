@@ -36,7 +36,7 @@ const data = [
   // },
 ];
 
-export const Menu = () => {
+const Menu = () => {
   const mountainStyles = [
     { top: '250px', left: '30px' },
     { top: '250px', left: '250px' },
@@ -108,3 +108,5 @@ export const Menu = () => {
     </>
   );
 };
+
+export default Menu;

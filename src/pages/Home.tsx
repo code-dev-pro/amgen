@@ -3,7 +3,7 @@ import { ExploreButton } from '../components/buttons/ExploreButton';
 import backgroundImage from '../assets/images/fond_accueil.jpg';
 import logo from '../assets/images/logo.svg';
 
-export const Home = () => {
+const Home = () => {
   return (
     <div className="relative min-h-screen w-screen">
       <img src={backgroundImage} alt="Montagne" className="absolute inset-0 h-full w-full object-cover" />
@@ -17,3 +17,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;

@@ -5,7 +5,7 @@ interface CustomCheckboxProps {
   onChange: () => void;
 }
 
-const CustomCheckbox = ({ id, label, checked, onChange }: CustomCheckboxProps) => {
+export const CustomCheckbox = ({ id, label, checked, onChange }: CustomCheckboxProps) => {
   return (
     <div className="flex items-center">
       <input type="checkbox" id={id} checked={checked} onChange={onChange} className="hidden" />
@@ -18,5 +18,3 @@ const CustomCheckbox = ({ id, label, checked, onChange }: CustomCheckboxProps) =
     </div>
   );
 };
-
-export default CustomCheckbox;

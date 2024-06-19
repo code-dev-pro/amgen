@@ -1,18 +1,29 @@
+import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { Menu } from './pages/Menu';
-import { ErrorPage } from './pages/ErrorPage';
+import { Loader } from './components/Loader';
+
+const Home = lazy(() => import('./pages/Home'));
+const Menu = lazy(() => import('./pages/Menu'));
+const ErrorPage = lazy(() => import('./pages/ErrorPage'));
 
 const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: <Home />,
+      element: (
+        <Suspense fallback={<Loader />}>
+          <Home />
+        </Suspense>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/menu',
-      element: <Menu />,
+      element: (
+        <Suspense fallback={<Loader />}>
+          <Menu />
+        </Suspense>
+      ),
     },
   ],
   {

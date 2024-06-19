@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BackButton } from './buttons/BackButton';
-import Form from './Form';
+import { Form } from './Form';
 
 interface PopupProps {
   setPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;

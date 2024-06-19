@@ -1,4 +1,4 @@
-import CustomCheckbox from './Checkbox';
+import { CustomCheckbox } from './Checkbox';
 import { ValidateButton } from './buttons/ValidateButton';
 
 interface FormProps {
@@ -6,7 +6,7 @@ interface FormProps {
   setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Form: React.FC<FormProps> = ({ isChecked, setIsChecked }) => {
+export const Form = ({ isChecked, setIsChecked }: FormProps) => {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -104,5 +104,3 @@ const Form: React.FC<FormProps> = ({ isChecked, setIsChecked }) => {
     </form>
   );
 };
-
-export default Form;

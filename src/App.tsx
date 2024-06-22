@@ -5,6 +5,7 @@ import ErrorPage from './pages/ErrorPage';
 
 const Home = lazy(() => import('./pages/Home'));
 const Menu = lazy(() => import('./pages/Menu'));
+const Quizz = lazy(() => import('./pages/Quizz'));
 
 const router = createBrowserRouter(
   [
@@ -22,6 +23,14 @@ const router = createBrowserRouter(
       element: (
         <Suspense fallback={<Loader />}>
           <Menu />
+        </Suspense>
+      ),
+    },
+    {
+      path: '/quizz',
+      element: (
+        <Suspense fallback={<Loader />}>
+          <Quizz />
         </Suspense>
       ),
     },

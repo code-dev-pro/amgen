@@ -10,32 +10,19 @@ import backgroundMenu from '../assets/images/fond_menu.jpg';
 import logo from '../assets/images/logo.svg';
 import homeIcon from '../assets/images/icon_home_off.svg';
 import mailIcon from '../assets/images/icon_mail_off.svg';
+import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
 
 const data = [
   {
-    title: 'Cardio-<br />Métabolisme',
-    link: '/cardio',
+    title: 'Cardio-Métabolisme',
+    titleHTML: 'Cardio-<br />Métabolisme',
+    category: 'cardio',
   },
-  // {
-  //   title: "Histoire<br />d'Amgen",
-  //   link: '/amgen',
-  // },
-  // {
-  //   title: "Fondation<br />d'Amgen",
-  //   link: '/fondation',
-  // },
-  // {
-  //   title: 'Recherche &<br />Développement',
-  //   link: '/recherche',
-  // },
-  // {
-  //   title: "Expertise<br />d'Amgen",
-  //   link: '/expertise',
-  // },
-  // {
-  //   title: 'Exploration<br />surprise',
-  //   link: '/exploration',
-  // },
+  {
+    title: 'Fondation AMGEN',
+    titleHTML: 'Fondation <br />AMGEN',
+    category: '',
+  },
 ];
 
 const Menu = () => {
@@ -49,6 +36,7 @@ const Menu = () => {
   ];
 
   const { isPopupOpen, setPopupOpen } = usePopupStore();
+  const { setQuizzTitle, setQuizzCategory } = useQuizzTitleStore();
 
   const handleMailIconClick = () => {
     setPopupOpen(true);
@@ -90,7 +78,7 @@ const Menu = () => {
         {data.map((item, index) => (
           <Link
             key={index}
-            to={item.link}
+            to="/quizz"
             className="text-accent-blue font-white-on-black text-2xl block mb-4 whitespace-nowrap text-center"
             style={{
               position: 'absolute',
@@ -98,8 +86,12 @@ const Menu = () => {
               left: mountainStyles[index].left,
             }}
             dangerouslySetInnerHTML={sanitizeHtml(
-              `<span class="text-white font-almaq text-lg uppercase">Mont</span> <br />${item.title}`
+              `<span class="text-white font-almaq text-lg uppercase">Mont</span> <br />${item.titleHTML}`
             )}
+            onClick={() => {
+              setQuizzTitle(item.title);
+              setQuizzCategory(item.category);
+            }}
           />
         ))}
       </div>

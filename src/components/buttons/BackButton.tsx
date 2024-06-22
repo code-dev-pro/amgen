@@ -9,7 +9,7 @@ export const BackButton = () => {
         <path d="M27 15L18 24.5L27 34" stroke="#00004E" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
 
-      <span className="ml-2 uppercase text-xs">Retour</span>
+      <span className="ml-2 uppercase text-xs text-black">Retour</span>
     </button>
   );
 };

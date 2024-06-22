@@ -16,7 +16,7 @@ export const Form = () => {
   };
 
   return (
-    <form className="text-base px-6 pt-8" onSubmit={handleSubmit}>
+    <form className="text-base text-black px-6 pt-8" onSubmit={handleSubmit}>
       <p>Bonjour,</p>
       <p>
         Quel(s) type(s) de contenus souhaiteriez-vous recevoir ? (Publications scientifiques, mécanismes d’action, etc.)
@@ -94,6 +94,7 @@ export const Form = () => {
           label="J’accepte de recevoir des communications AMGEN"
           checked={isChecked}
           onChange={handleCheckboxChange}
+          shape="round"
         />
       </div>
 

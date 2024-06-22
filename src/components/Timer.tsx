@@ -1,26 +1,12 @@
-// import React from 'react';
-
-// export const Timer = () => {
-//   // 3 minutes
-//   const duration = 3 * 60 * 1000;
-//   const [timeLeft, setTimeLeft] = React.useState(duration);
-
-//   React.useEffect(() => {
-//     const interval = setInterval(() => {
-//       setTimeLeft(timeLeft - 1000);
-//     }, 1000);
-
-//     return () => clearInterval(interval);
-//   }, [timeLeft]);
-
-//   return <div>{timeLeft / 1000} seconds</div>;
-// };
-
 import { useState, useEffect } from 'react';
 
-export const Timer = () => {
-  const [timeLeft, setTimeLeft] = useState(180); // 3 minutes = 180 seconds
-  const totalDuration = 180; // Total duration in seconds
+interface TimerProps {
+  onComplete: () => void;
+}
+
+export const Timer = ({ onComplete }: TimerProps) => {
+  const [timeLeft, setTimeLeft] = useState(180);
+  const totalDuration = 180;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -29,6 +15,12 @@ export const Timer = () => {
 
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      onComplete();
+    }
+  }, [timeLeft, onComplete]);
 
   const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
   const seconds = String(timeLeft % 60).padStart(2, '0');

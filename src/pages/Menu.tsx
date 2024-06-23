@@ -5,25 +5,13 @@ import { Footer } from '../components/Footer';
 import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
 import { usePopupStore } from '../hooks/usePopupStore';
+import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
+import { data } from '../data';
 
 import backgroundMenu from '../assets/images/fond_menu.jpg';
 import logo from '../assets/images/logo.svg';
 import homeIcon from '../assets/images/icon_home_off.svg';
 import mailIcon from '../assets/images/icon_mail_off.svg';
-import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
-
-const data = [
-  {
-    title: 'Cardio-Métabolisme',
-    titleHTML: 'Cardio-<br />Métabolisme',
-    category: 'cardio',
-  },
-  {
-    title: 'Fondation AMGEN',
-    titleHTML: 'Fondation <br />AMGEN',
-    category: '',
-  },
-];
 
 const Menu = () => {
   const mountainStyles = [

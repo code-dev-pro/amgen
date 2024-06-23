@@ -2,11 +2,18 @@ import { useState, useEffect } from 'react';
 
 interface TimerProps {
   onComplete: () => void;
+  isFinished?: boolean;
 }
 
-export const Timer = ({ onComplete }: TimerProps) => {
+export const Timer = ({ onComplete, isFinished }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(180);
   const totalDuration = 180;
+
+  useEffect(() => {
+    if (isFinished) {
+      setTimeLeft(0);
+    }
+  }, [isFinished]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -28,6 +35,10 @@ export const Timer = ({ onComplete }: TimerProps) => {
   const circleStyle = {
     background: `conic-gradient(#00004E ${(timeLeft / totalDuration) * 360}deg, transparent 0)`,
   };
+
+  if (timeLeft === 0) {
+    circleStyle.background = '#00004E';
+  }
 
   return (
     <div className="relative w-[85px] h-[85px] flex justify-center items-center">

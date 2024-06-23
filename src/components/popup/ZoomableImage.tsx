@@ -49,16 +49,14 @@ const Controls = () => {
   );
 };
 
-export const ZoomableImage = () => {
-  const img = 'src/assets/images/savoir_txt.png';
-
+export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageAlt: string }) => {
   return (
     <div className="flex justify-center items-center mt-4 w-full h-full max-w-[845px] max-h-[500px]">
       <TransformWrapper initialScale={1} minScale={1} maxScale={2}>
         <Controls />
         <TransformComponent>
           <div className="flex justify-center items-center w-full h-full">
-            <img src={img} alt="test" className="max-w-[845px] max-h-[500px]" />
+            <img src={imageUrl} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
           </div>
         </TransformComponent>
       </TransformWrapper>

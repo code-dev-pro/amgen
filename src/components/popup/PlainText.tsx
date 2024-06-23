@@ -1,11 +1,11 @@
 interface PlainTextProps {
-  children: React.ReactNode;
+  text: string;
 }
 
-export const PlainText = ({ children }: PlainTextProps) => {
+export const PlainText = ({ text }: PlainTextProps) => {
   return (
-    <div className="w-full h-full max-w-[845px] max-h-[500px] flex items-center justify-center">
-      <p className="text-sm ml-4">{children}</p>
+    <div className="w-full h-full max-w-[845px] max-h-[500px] flex items-center justify-center text-black">
+      <p className="text-sm ml-4">{text}</p>
     </div>
   );
 };

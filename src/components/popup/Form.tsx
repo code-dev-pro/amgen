@@ -90,16 +90,23 @@ export const Form = () => {
           />
         </div>
         <CustomCheckbox
-          id="customCheckbox"
+          id="accept-terms"
           label="J’accepte de recevoir des communications AMGEN"
           checked={isChecked}
           onChange={handleCheckboxChange}
+          labelColor="black"
           shape="round"
         />
       </div>
 
       <div className="flex justify-center mt-10">
-        <ValidateButton type="submit" isDisabled={!isChecked} textColor="text-accent-blue" fontSize="text-4xl" />
+        <ValidateButton
+          type="submit"
+          text="Valider"
+          isDisabled={!isChecked}
+          textColor="text-accent-blue"
+          fontSize="text-4xl"
+        />
       </div>
     </form>
   );

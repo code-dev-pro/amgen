@@ -12,6 +12,7 @@ import backgroundMenu from '../assets/images/fond_menu.jpg';
 import logo from '../assets/images/logo.svg';
 import homeIcon from '../assets/images/icon_home_off.svg';
 import mailIcon from '../assets/images/icon_mail_off.svg';
+import { Routes } from '../utils/routes';
 
 const Menu = () => {
   const mountainStyles = [
@@ -58,7 +59,7 @@ const Menu = () => {
             className="cursor-pointer"
             onClick={handleMailIconClick}
           />
-          <Link to="/">
+          <Link to={Routes.Home}>
             <img src={homeIcon} alt="Accueil" width={26} height={26} />
           </Link>
         </div>
@@ -66,7 +67,7 @@ const Menu = () => {
         {data.map((item, index) => (
           <Link
             key={index}
-            to="/quizz"
+            to={Routes.Quizz}
             className="text-accent-blue font-white-on-black text-2xl block mb-4 whitespace-nowrap text-center"
             style={{
               position: 'absolute',

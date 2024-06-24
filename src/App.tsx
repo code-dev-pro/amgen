@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Loader } from './components/Loader';
+import { Routes } from './utils/routes';
 import ErrorPage from './pages/ErrorPage';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -10,7 +11,7 @@ const Quizz = lazy(() => import('./pages/Quizz'));
 const router = createBrowserRouter(
   [
     {
-      path: '/',
+      path: Routes.Home,
       element: (
         <Suspense fallback={<Loader />}>
           <Home />
@@ -19,7 +20,7 @@ const router = createBrowserRouter(
       errorElement: <ErrorPage />,
     },
     {
-      path: '/menu',
+      path: Routes.Menu,
       element: (
         <Suspense fallback={<Loader />}>
           <Menu />
@@ -27,7 +28,7 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: '/quizz',
+      path: Routes.Quizz,
       element: (
         <Suspense fallback={<Loader />}>
           <Quizz />
@@ -36,7 +37,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/amgen',
+    basename: Routes.Base,
   }
 );
 

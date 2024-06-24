@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { Routes } from '../../utils/routes';
 
 export const ExploreButton = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/menu');
+    navigate(Routes.Menu);
   };
   return (
     <button

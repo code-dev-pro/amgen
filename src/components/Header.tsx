@@ -3,6 +3,7 @@ import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
 
 import logo from '../assets/images/logo.svg';
 import homeIcon from '../assets/images/icon_home_off.svg';
+import { Routes } from '../utils/routes';
 
 export const Header = () => {
   const { quizzTitle, quizzCategory } = useQuizzTitleStore();
@@ -16,7 +17,7 @@ export const Header = () => {
 
         {quizzCategory !== '' && <p className="font-light">{quizzCategory}</p>}
       </div>
-      <Link to="/">
+      <Link to={Routes.Home}>
         <img src={homeIcon} alt="Accueil" width={26} height={26} className="absolute top-8 right-8" />
       </Link>
     </div>

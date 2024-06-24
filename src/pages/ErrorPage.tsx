@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Routes } from '../utils/routes';
 
 const ErrorPage = () => {
   return (
@@ -6,7 +7,7 @@ const ErrorPage = () => {
       <h1 className="text-4xl font-bold">Erreur 404</h1>
       <p className="text-xl">La page que vous cherchez n'existe pas</p>
       <p className="text-xl pt-4">
-        <Link to="/">Retourner à l'accueil</Link>
+        <Link to={Routes.Home}>Retourner à l'accueil</Link>
       </p>
     </div>
   );

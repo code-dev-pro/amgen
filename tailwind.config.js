@@ -18,6 +18,7 @@ export default {
         'accent-purple': '#703684',
         'accent-brown': '#511F0D',
         'accent-blue': '#00BCE4',
+        'accent-green': '#2BC76A',
         'secondary-blue': '#003B8C',
       },
     },

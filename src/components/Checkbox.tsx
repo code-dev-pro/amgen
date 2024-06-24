@@ -55,9 +55,9 @@ export const CustomCheckbox = ({
             },
             {
               'border-white bg-white': !isAnswerShown,
-              'border-white bg-green-500': isAnswerShown && isCorrectAnswerSelected,
-              'border-white bg-red-500': isAnswerShown && isIncorrectAnswerSelected,
-              'border-green-500 bg-white': isAnswerShown && isCorrectAnswer && !isCorrectAnswerSelected,
+              'border-white bg-accent-green': isAnswerShown && isCorrectAnswerSelected,
+              'border-white bg-accent-red': isAnswerShown && isIncorrectAnswerSelected,
+              'border-accent-green bg-white': isAnswerShown && isCorrectAnswer && !isCorrectAnswerSelected,
               'bg-white': isAnswerShown && !isCorrectAnswer && !isIncorrectAnswerSelected,
             }
           )}
@@ -75,8 +75,8 @@ export const CustomCheckbox = ({
                 },
                 {
                   'bg-primary-dark-blue': !isAnswerShown,
-                  'bg-green-500': isAnswerShown && isCorrectAnswerSelected,
-                  'bg-red-500': isAnswerShown && isIncorrectAnswerSelected,
+                  'bg-accent-green': isAnswerShown && isCorrectAnswerSelected,
+                  'bg-accent-red': isAnswerShown && isIncorrectAnswerSelected,
                 }
               )}
             ></div>
@@ -88,8 +88,8 @@ export const CustomCheckbox = ({
             [fontSize]: fontSize,
             'text-white': !isAnswerShown && labelColor === 'white',
             'text-black': !isAnswerShown && labelColor === 'black',
-            'text-green-500': (isAnswerShown && isCorrectAnswerSelected) || (isAnswerShown && isCorrectAnswer),
-            'text-red-500': isAnswerShown && isIncorrectAnswerSelected,
+            'text-accent-green': (isAnswerShown && isCorrectAnswerSelected) || (isAnswerShown && isCorrectAnswer),
+            'text-accent-red': isAnswerShown && isIncorrectAnswerSelected,
           })}
         >
           {label}

@@ -11,13 +11,16 @@
   },
   "dependencies": {
     "@fontsource-variable/noto-sans": "^5.0.5",
+    "@hookform/resolvers": "^3.6.0",
     "@types/dompurify": "^3.0.5",
     "clsx": "^2.1.1",
     "dompurify": "^3.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.52.0",
     "react-router-dom": "^6.23.1",
     "react-zoom-pan-pinch": "^3.4.4",
+    "zod": "^3.23.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

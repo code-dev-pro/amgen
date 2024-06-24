@@ -112,7 +112,7 @@ export const Form = () => {
       </div>
 
       <div className="flex justify-center mt-10">
-        <ValidateButton type="submit" text="Valider" textColor="text-accent-blue" fontSize="text-4xl" />
+        <ValidateButton type="submit" text="Valider" textColor="text-accent-blue" fontSize="text-4xl" isAnimated />
       </div>
     </form>
   );

@@ -23,6 +23,7 @@ export default {
       },
       animation: {
         fadeIn: 'fadeIn 0.5s ease-in-out',
+        scanner: '3s scan 0s infinite linear both',
       },
       keyframes: {
         fadeIn: {
@@ -31,6 +32,14 @@ export default {
           },
           to: {
             opacity: 1,
+          },
+        },
+        scan: {
+          from: {
+            transform: 'rotate(0deg) translateY(-150px) rotate(0deg)',
+          },
+          to: {
+            transform: 'rotate(360deg) translateY(-150px) rotate(-360deg)',
           },
         },
       },

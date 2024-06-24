@@ -17,3 +17,22 @@ body {
   background-color: #00004e;
   color: #fff;
 }
+
+/* loader */
+.dot {
+  fill: hsl(204, 100%, 65%);
+}
+
+.dot--light {
+  fill: hsl(178, 94%, 65%);
+  filter: url('#glow');
+}
+
+.dot--glowing {
+  fill: hsl(178, 94%, 65%);
+  filter: url('#outer-glow');
+}
+
+.circles {
+  filter: url('#goo');
+}

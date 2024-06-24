@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ValidateButton } from '../buttons/ValidateButton';
 import { CustomCheckbox } from '../Checkbox';
+import { STORAGE_KEYS } from '../../utils/storageKeys';
 
 const schema = z.object({
   contentPreference: z.string().min(1, { message: 'Ce champ est requis' }),
@@ -32,7 +33,7 @@ export const Form = () => {
   });
 
   const onSubmit = (data: FormData) => {
-    const storedData = localStorage.getItem('formDataList');
+    const storedData = localStorage.getItem(STORAGE_KEYS.FORM_DATA);
     const formDataList = storedData ? JSON.parse(storedData) : [];
     formDataList.push(data);
     localStorage.setItem('formDataList', JSON.stringify(formDataList));

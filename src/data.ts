@@ -20,7 +20,7 @@ export const data = [
         correctAnswer: ['Mont Everest', 'K2'],
         learnMore: {
           text: '',
-          imageURL: 'savoir_txt.png',
+          imageURL: 'src/assets/images/savoir_txt.png',
           imageAlt: 'test',
         },
       },
@@ -30,7 +30,7 @@ export const data = [
         correctAnswer: ['Nil', 'Amazon'],
         learnMore: {
           text: '',
-          imageURL: 'savoir_document.jpg',
+          imageURL: 'src/assets/images/savoir_document.jpg',
           imageAlt: 'test',
         },
       },
@@ -50,7 +50,7 @@ export const data = [
         correctAnswer: ['Chine', 'Inde'],
         learnMore: {
           text: '',
-          imageURL: 'savoir_txt.png',
+          imageURL: 'src/assets/images/savoir_txt.png',
           imageAlt: 'test',
         },
       },
@@ -60,7 +60,7 @@ export const data = [
         correctAnswer: ['Tokyo', 'Bangkok'],
         learnMore: {
           text: '',
-          imageURL: 'savoir_document.jpg',
+          imageURL: 'src/assets/images/savoir_document.jpg',
           imageAlt: 'test',
         },
       },
@@ -80,7 +80,7 @@ export const data = [
         correctAnswer: ['Désert du Sahara', 'Désert de Gobi'],
         learnMore: {
           text: '',
-          imageURL: 'savoir_txt.png',
+          imageURL: 'src/assets/images/savoir_txt.png',
           imageAlt: 'test',
         },
       },
@@ -100,7 +100,7 @@ export const data = [
         correctAnswer: ['Ottawa', 'Toronto'],
         learnMore: {
           text: '',
-          imageURL: 'savoir_document.jpg',
+          imageURL: 'src/assets/images/savoir_document.jpg',
           imageAlt: 'test',
         },
       },
@@ -110,5 +110,17 @@ export const data = [
     title: 'Fondation AMGEN',
     titleHTML: 'Fondation <br />AMGEN',
     category: '',
+    quizz: [
+      {
+        question: 'Quelles sont les unités de mesure du vent ?',
+        options: ['Noeuds', 'Newton', 'Km/h', 'Joule'],
+        correctAnswer: ['Noeuds', 'Km/h'],
+        learnMore: {
+          text: '',
+          imageURL: 'src/assets/images/savoir_document.jpg',
+          imageAlt: 'test',
+        },
+      },
+    ],
   },
 ];

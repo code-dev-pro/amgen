@@ -8,6 +8,7 @@ import { LearnMoreButton } from '../components/buttons/LearnMoreButton';
 import { CustomCheckbox } from '../components/Checkbox';
 import { QuizzCompletion } from '../components/QuizzCompletion';
 import { Header } from '../components/Header';
+import { saveQuizAnswer } from '../utils/helpers';
 
 import backgroundMenu from '../assets/images/fond_quizz.jpg';
 
@@ -52,6 +53,12 @@ const Quizz = () => {
 
   const handleNextClick = () => {
     setIsAnswerShown(false);
+    const answer = {
+      question: currentQuestion.question,
+      selectedAnswers,
+    };
+    saveQuizAnswer(quizzTitle, answer);
+
     setSelectedAnswers([]);
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -61,6 +68,10 @@ const Quizz = () => {
   };
 
   const handleTimerComplete = () => {
+    saveQuizAnswer(quizzTitle, {
+      question: currentQuestion.question,
+      selectedAnswers,
+    });
     setQuizCompleted(true);
   };
 

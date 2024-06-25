@@ -1,18 +1,7 @@
 import { usePopupStore } from '../../hooks/usePopupStore';
-import { Popup } from '../popup/Popup';
-import { ZoomableImage } from '../popup/ZoomableImage';
-import { PlainText } from '../popup/PlainText';
 
-interface LearnMoreButtonProps {
-  content: {
-    text: string;
-    imageURL: string;
-    imageAlt: string;
-  };
-}
-
-export const LearnMoreButton = ({ content }: LearnMoreButtonProps) => {
-  const { isPopupOpen, setPopupOpen } = usePopupStore();
+export const LearnMoreButton = () => {
+  const { setPopupOpen } = usePopupStore();
 
   return (
     <>
@@ -22,16 +11,6 @@ export const LearnMoreButton = ({ content }: LearnMoreButtonProps) => {
       >
         <span className="text-accent-blue">En savoir +</span>
       </button>
-
-      {isPopupOpen && (
-        <Popup>
-          {content.text !== '' ? (
-            <PlainText text={content.text} />
-          ) : (
-            <ZoomableImage imageUrl={content.imageURL} imageAlt={content.imageAlt} />
-          )}
-        </Popup>
-      )}
     </>
   );
 };

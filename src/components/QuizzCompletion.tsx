@@ -1,10 +1,21 @@
 import { useNavigate } from 'react-router-dom';
+import { usePopupStore } from '../hooks/usePopupStore';
 
-export const QuizzCompletion = () => {
+interface QuizzCompletionProps {
+  setCompletionContentPopup: () => void;
+}
+
+export const QuizzCompletion = ({ setCompletionContentPopup }: QuizzCompletionProps) => {
+  const { setPopupOpen } = usePopupStore();
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate('/menu');
+  };
+
+  const handleCompletionClick = () => {
+    setCompletionContentPopup();
+    setPopupOpen(true);
   };
 
   return (
@@ -14,7 +25,10 @@ export const QuizzCompletion = () => {
         <p className="font-white-on-black text-accent-blue text-2xl">Merci de votre participation.</p>
 
         <div className="flex justify-between items-center mt-6 space-x-8">
-          <button className="bg-primary-light-blue text-primary-dark-blue text-sm shadow-lg flex items-center justify-between text-left w-[373px] h-[46px] px-2">
+          <button
+            className="bg-primary-light-blue text-primary-dark-blue text-sm shadow-lg flex items-center justify-between text-left w-[373px] h-[46px] px-2"
+            onClick={handleCompletionClick}
+          >
             <span className="flex-1">Je souhaite recevoir de la documentation pour m'accompagner dans ma pratique</span>
             <svg
               className="ml-2"

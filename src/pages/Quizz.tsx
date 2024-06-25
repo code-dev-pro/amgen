@@ -16,6 +16,7 @@ import backgroundMenu from '../assets/images/fond_quizz.jpg';
 import { Popup } from '../components/popup/Popup';
 import { PlainText } from '../components/popup/PlainText';
 import { ZoomableImage } from '../components/popup/ZoomableImage';
+import { Form } from '../components/popup/Form';
 
 const Quizz = () => {
   const { isPopupOpen } = usePopupStore();
@@ -36,6 +37,7 @@ const Quizz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [popupContent, setPopupContent] = useState<'learnMore' | 'completionContent'>('learnMore');
 
   useEffect(() => {
     const categoryData = data.find((item) => item.title === quizzTitle);
@@ -83,6 +85,10 @@ const Quizz = () => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
+  const setCompletionContentPopup = () => {
+    setPopupContent('completionContent');
+  };
+
   return (
     <>
       <div
@@ -96,7 +102,7 @@ const Quizz = () => {
         </div>
 
         {quizCompleted ? (
-          <QuizzCompletion />
+          <QuizzCompletion setCompletionContentPopup={setCompletionContentPopup} />
         ) : (
           <div className="absolute top-[33%] left-0 w-full px-8">
             <div className="bg-accent-blue bg-opacity-25 px-10 py-6">
@@ -152,13 +158,19 @@ const Quizz = () => {
 
       {isPopupOpen && (
         <Popup>
-          {currentQuestion.learnMore.text !== '' ? (
-            <PlainText text={currentQuestion.learnMore.text} />
+          {popupContent === 'learnMore' ? (
+            <>
+              {currentQuestion.learnMore.text !== '' ? (
+                <PlainText text={currentQuestion.learnMore.text} />
+              ) : (
+                <ZoomableImage
+                  imageUrl={currentQuestion.learnMore.imageURL}
+                  imageAlt={currentQuestion.learnMore.imageAlt}
+                />
+              )}
+            </>
           ) : (
-            <ZoomableImage
-              imageUrl={currentQuestion.learnMore.imageURL}
-              imageAlt={currentQuestion.learnMore.imageAlt}
-            />
+            <Form />
           )}
         </Popup>
       )}

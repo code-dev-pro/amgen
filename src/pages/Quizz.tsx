@@ -93,7 +93,7 @@ const Quizz = () => {
       ) : (
         <div className="absolute top-[33%] left-0 w-full px-8">
           <div className="bg-accent-blue bg-opacity-25 px-10 py-6">
-            <p className="text-3xl">{currentQuestion.question}</p>
+            <p className="text-3xl font-bold">{currentQuestion.question}</p>
 
             <ul className="text-lg pl-8 mt-4 space-y-4">
               {currentQuestion?.options.map((option, optionIndex) => (

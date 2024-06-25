@@ -89,6 +89,8 @@ const Quizz = () => {
     setPopupContent('completionContent');
   };
 
+  const isValidateButtonDisabled = selectedAnswers.length === 0;
+
   return (
     <>
       <div
@@ -153,7 +155,12 @@ const Quizz = () => {
               </>
             ) : (
               <div className="text-center mt-6">
-                <ValidateButton text="Valider" fontSize="text-4xl" onClick={handleValidateClick} />
+                <ValidateButton
+                  text="Valider"
+                  fontSize="text-4xl"
+                  onClick={handleValidateClick}
+                  isDisabled={isValidateButtonDisabled}
+                />
               </div>
             )}
           </div>

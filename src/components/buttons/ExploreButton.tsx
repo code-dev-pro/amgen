@@ -9,7 +9,7 @@ export const ExploreButton = () => {
   };
   return (
     <button
-      className="bg-primary-light-blue text-primary-dark-blue text-2xl font-notoSans font-extrabold px-4 shadow-lg flex items-center justify-between uppercase w-[373px] h-[46px]"
+      className="bg-primary-light-blue text-primary-dark-blue text-2xl font-notoSans font-extrabold px-4 shadow-lg flex items-center justify-between uppercase w-[373px] h-[46px] hover:scale-95 transition-all duration-300 ease-in-out"
       onClick={handleClick}
     >
       lancer l'exploration

@@ -98,7 +98,11 @@ const Quizz = () => {
         <Header />
 
         <div className="flex justify-center items-center px-8 mt-4">
-          <Timer onComplete={handleTimerComplete} isFinished={quizCompleted} />
+          <Timer
+            onComplete={handleTimerComplete}
+            isPaused={isPopupOpen && popupContent === 'learnMore'}
+            isFinished={quizCompleted}
+          />
         </div>
 
         {quizCompleted ? (

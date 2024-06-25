@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 
 interface TimerProps {
   onComplete: () => void;
+  isPaused?: boolean;
   isFinished?: boolean;
 }
 
-export const Timer = ({ onComplete, isFinished }: TimerProps) => {
+export const Timer = ({ onComplete, isPaused, isFinished }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(180);
   const totalDuration = 180;
 
@@ -16,12 +17,13 @@ export const Timer = ({ onComplete, isFinished }: TimerProps) => {
   }, [isFinished]);
 
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => Math.max(prevTime - 1, 0));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [isPaused]);
 
   useEffect(() => {
     if (timeLeft === 0) {

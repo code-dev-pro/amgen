@@ -18,16 +18,16 @@ import mailIcon from '../assets/images/icon_mail_off.svg';
 const Menu = () => {
   const mountainStyles = [
     { top: '250px', left: '30px' },
-    { top: '250px', left: '250px' },
-    { top: '250px', left: '400px' },
-    { top: '250px', left: '600px' },
-    { top: '250px', left: '820px' },
-    { top: '250px', left: '1020px' },
+    { top: '350px', left: '170px' },
+    { top: '250px', left: '320px' },
+    { top: '200px', left: '510px' },
+    { top: '300px', left: '720px' },
+    { top: '250px', left: '850px' },
   ];
 
   const navigate = useNavigate();
   const { isPopupOpen, setPopupOpen } = usePopupStore();
-  const { setQuizzTitle, setQuizzCategory } = useQuizzTitleStore();
+  const { setQuizzIndex, setQuizzTitle, setQuizzCategory } = useQuizzTitleStore();
   const completedMountains = useUserProgressStore((state) => state.completedMountains);
 
   const handleMailIconClick = () => {
@@ -82,6 +82,7 @@ const Menu = () => {
             )}
             disabled={completedMountains.includes(item.title)}
             onClick={() => {
+              setQuizzIndex(index);
               setQuizzTitle(item.title);
               setQuizzCategory(item.category);
               navigate(Routes.Quizz);

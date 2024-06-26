@@ -1,11 +1,26 @@
-import Pin from '../assets/images/pin_rouge.svg';
-import Flag from '../assets/images/drapeau_rouge.svg';
+import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
+
+import PinYellow from '../assets/images/pin_jaune.svg';
+import PinRed from '../assets/images/pin_rouge.svg';
+import PinBrown from '../assets/images/pin_marron.svg';
+import PinPink from '../assets/images/pin_rose.svg';
+import PinBlue from '../assets/images/pin_bleu.svg';
+import PinPurple from '../assets/images/pin_violet.svg';
+
+import FlagYellow from '../assets/images/drapeau_jaune.svg';
+import FlagRed from '../assets/images/drapeau_rouge.svg';
+import FlagBrown from '../assets/images/drapeau_marron.svg';
+import FlagPink from '../assets/images/drapeau_rose.svg';
+import FlagBlue from '../assets/images/drapeau_bleu.svg';
+import FlagPurple from '../assets/images/drapeau_violet.svg';
 
 interface MountainPathProps {
   numQuestions: number;
 }
 
 export const MountainPath = ({ numQuestions }: MountainPathProps) => {
+  const { quizzIndex } = useQuizzTitleStore();
+
   const predefinedPoints = [
     { cx: 85, cy: 245, isIntermediate: true }, // Point de départ
     { cx: 126, cy: 240, isIntermediate: false },
@@ -45,6 +60,17 @@ export const MountainPath = ({ numQuestions }: MountainPathProps) => {
   }));
   points[0].isIntermediate = true;
 
+  const colorMapping = [
+    { pin: PinYellow, flag: FlagYellow },
+    { pin: PinRed, flag: FlagRed },
+    { pin: PinBrown, flag: FlagBrown },
+    { pin: PinPink, flag: FlagPink },
+    { pin: PinBlue, flag: FlagBlue },
+    { pin: PinPurple, flag: FlagPurple },
+  ];
+
+  const { pin, flag } = colorMapping[quizzIndex] || colorMapping[0];
+
   return (
     <svg width="410px" height="338px" xmlns="http://www.w3.org/2000/svg" className="relative">
       {points.slice(0, -1).map((point, index) => (
@@ -69,9 +95,9 @@ export const MountainPath = ({ numQuestions }: MountainPathProps) => {
             />
           )
       )}
-      <image href={Pin} x={points[0].cx - 15} y={points[0].cy - 30} width="30" height="30" />
+      <image href={pin} x={points[0].cx - 15} y={points[0].cy - 30} width="30" height="30" />
       <image
-        href={Flag}
+        href={flag}
         x={points[points.length - 1].cx - 5}
         y={points[points.length - 1].cy - 30}
         width="30"

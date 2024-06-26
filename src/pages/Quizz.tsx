@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
-import { data } from '../data';
+import { usePopupStore } from '../hooks/usePopupStore';
 import { Footer } from '../components/Footer';
 import { Timer } from '../components/Timer';
 import { ValidateButton } from '../components/buttons/ValidateButton';
@@ -9,14 +9,14 @@ import { LearnMoreButton } from '../components/buttons/LearnMoreButton';
 import { CustomCheckbox } from '../components/Checkbox';
 import { QuizzCompletion } from '../components/QuizzCompletion';
 import { Header } from '../components/Header';
-import { saveQuizAnswer } from '../utils/helpers';
-import { usePopupStore } from '../hooks/usePopupStore';
-
-import backgroundMenu from '../assets/images/fond_quizz.jpg';
 import { Popup } from '../components/popup/Popup';
+import { Form } from '../components/popup/Form';
 import { PlainText } from '../components/popup/PlainText';
 import { ZoomableImage } from '../components/popup/ZoomableImage';
-import { Form } from '../components/popup/Form';
+import { saveQuizAnswer } from '../utils/helpers';
+import { data } from '../data';
+
+import backgroundMenu from '../assets/images/fond_quizz.jpg';
 
 const Quizz = () => {
   const { isPopupOpen } = usePopupStore();
@@ -108,7 +108,7 @@ const Quizz = () => {
         </div>
 
         {quizCompleted ? (
-          <QuizzCompletion setCompletionContentPopup={setCompletionContentPopup} />
+          <QuizzCompletion setCompletionContentPopup={setCompletionContentPopup} mountainName={quizzTitle} />
         ) : (
           <div className="absolute top-[33%] left-0 w-full px-8">
             <div className="bg-accent-blue bg-opacity-25 px-10 py-6">

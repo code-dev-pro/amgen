@@ -1,16 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import { usePopupStore } from '../hooks/usePopupStore';
+import { useUserProgressStore } from '../hooks/useUserProgressStore';
+import { Routes } from '../utils/routes';
 
 interface QuizzCompletionProps {
+  mountainName: string;
   setCompletionContentPopup: () => void;
 }
 
-export const QuizzCompletion = ({ setCompletionContentPopup }: QuizzCompletionProps) => {
+export const QuizzCompletion = ({ setCompletionContentPopup, mountainName }: QuizzCompletionProps) => {
   const { setPopupOpen } = usePopupStore();
+  const markMountainAsCompleted = useUserProgressStore((state) => state.markMountainAsCompleted);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/menu');
+    markMountainAsCompleted(mountainName);
+    navigate(Routes.Menu);
   };
 
   const handleCompletionClick = () => {

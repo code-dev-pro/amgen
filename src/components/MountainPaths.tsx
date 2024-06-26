@@ -1,8 +1,12 @@
 import Pin from '../assets/images/pin_rouge.svg';
 import Flag from '../assets/images/drapeau_rouge.svg';
 
-export const MountainPath = () => {
-  const points = [
+interface MountainPathProps {
+  numQuestions: number;
+}
+
+export const MountainPath = ({ numQuestions }: MountainPathProps) => {
+  const predefinedPoints = [
     { cx: 85, cy: 245, isIntermediate: true }, // Point de départ
     { cx: 126, cy: 240, isIntermediate: false },
     { cx: 160, cy: 224, isIntermediate: false },
@@ -21,8 +25,28 @@ export const MountainPath = () => {
     { cx: 228, cy: 45, isIntermediate: true },
     { cx: 220, cy: 45, isIntermediate: false }, // Point d'arrivée
   ];
+
+  const totalPoints = predefinedPoints.length;
+  const nonIntermediateIndices = [0, totalPoints - 1];
+
+  if (numQuestions > 2) {
+    const step = (totalPoints - 1) / (numQuestions - 1);
+    for (let i = 1; i < numQuestions - 1; i++) {
+      nonIntermediateIndices.push(Math.round(i * step));
+    }
+  } else if (numQuestions === 2) {
+    nonIntermediateIndices.push(Math.floor((totalPoints - 1) / 2));
+  }
+
+  const uniqueNonIntermediateIndices = [...new Set(nonIntermediateIndices)].sort((a, b) => a - b);
+  const points = predefinedPoints.map((point, index) => ({
+    ...point,
+    isIntermediate: !uniqueNonIntermediateIndices.includes(index),
+  }));
+  points[0].isIntermediate = true;
+
   return (
-    <svg width="410px" height="338px" xmlns="http://www.w3.org/2000/svg">
+    <svg width="410px" height="338px" xmlns="http://www.w3.org/2000/svg" className="relative">
       {points.slice(0, -1).map((point, index) => (
         <line
           key={index}

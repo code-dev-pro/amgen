@@ -95,26 +95,12 @@ const Quizz = () => {
 
   return (
     <>
-      <div
-        // className={clsx('relative min-h-screen w-screen bg-cover bg-center z-0', { 'blur-sm': isPopupOpen })}
-        className={clsx('relative min-h-screen w-screen z-0', { 'blur-sm': isPopupOpen })}
-        // style={{ backgroundImage: `url(${backgroundMenu})` }}
-      >
-        <img
-          src={leftMountain}
-          alt="background"
-          className="absolute top-0 -left-[70px] w-[900px] h-auto"
-          // width={1179} height={450}
-        />
-        <img
-          src={rightMountain}
-          alt="background"
-          // width={364} height={300}
-          className="absolute top-0 right-0 w-[410px] h-auto"
-        />
+      <div className={clsx('relative min-h-screen w-screen z-0', { 'blur-sm': isPopupOpen })}>
+        <img src={leftMountain} alt="background" className="absolute top-0 -left-[70px] w-[900px] h-auto" />
+        <img src={rightMountain} alt="background" className="absolute top-0 right-0 w-[410px] h-auto" />
 
         <div className="absolute top-0 right-0">
-          <MountainPath />
+          <MountainPath numQuestions={questions.length} />
         </div>
 
         <Header />

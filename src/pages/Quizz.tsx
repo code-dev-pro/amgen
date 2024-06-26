@@ -13,13 +13,12 @@ import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
 import { PlainText } from '../components/popup/PlainText';
 import { ZoomableImage } from '../components/popup/ZoomableImage';
+import { MountainPath } from '../components/MountainPaths';
 import { saveQuizAnswer } from '../utils/helpers';
 import { data } from '../data';
 
-// import backgroundMenu from '../assets/images/fond_quizz.jpg';
 import leftMountain from '../assets/images/montagne_autres.png';
 import rightMountain from '../assets/images/montagne-seule.png';
-// import { MountainPath } from '../components/MountainPaths';
 
 const Quizz = () => {
   const { isPopupOpen } = usePopupStore();
@@ -114,9 +113,9 @@ const Quizz = () => {
           className="absolute top-0 right-0 w-[410px] h-auto"
         />
 
-        {/* <div className="absolute top-0 right-0">
+        <div className="absolute top-0 right-0">
           <MountainPath />
-        </div> */}
+        </div>
 
         <Header />
 

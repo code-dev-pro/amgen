@@ -16,7 +16,10 @@ import { ZoomableImage } from '../components/popup/ZoomableImage';
 import { saveQuizAnswer } from '../utils/helpers';
 import { data } from '../data';
 
-import backgroundMenu from '../assets/images/fond_quizz.jpg';
+// import backgroundMenu from '../assets/images/fond_quizz.jpg';
+import leftMountain from '../assets/images/montagne_autres.png';
+import rightMountain from '../assets/images/montagne-seule.png';
+// import { MountainPath } from '../components/MountainPaths';
 
 const Quizz = () => {
   const { isPopupOpen } = usePopupStore();
@@ -94,9 +97,27 @@ const Quizz = () => {
   return (
     <>
       <div
-        className={clsx('relative min-h-screen w-screen bg-cover bg-center z-0', { 'blur-sm': isPopupOpen })}
-        style={{ backgroundImage: `url(${backgroundMenu})` }}
+        // className={clsx('relative min-h-screen w-screen bg-cover bg-center z-0', { 'blur-sm': isPopupOpen })}
+        className={clsx('relative min-h-screen w-screen z-0', { 'blur-sm': isPopupOpen })}
+        // style={{ backgroundImage: `url(${backgroundMenu})` }}
       >
+        <img
+          src={leftMountain}
+          alt="background"
+          className="absolute top-0 -left-[70px] w-[900px] h-auto"
+          // width={1179} height={450}
+        />
+        <img
+          src={rightMountain}
+          alt="background"
+          // width={364} height={300}
+          className="absolute top-0 right-0 w-[410px] h-auto"
+        />
+
+        {/* <div className="absolute top-0 right-0">
+          <MountainPath />
+        </div> */}
+
         <Header />
 
         <div className="flex justify-center items-center px-8 mt-4">

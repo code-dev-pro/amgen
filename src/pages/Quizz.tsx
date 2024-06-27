@@ -100,7 +100,7 @@ const Quizz = () => {
         <img src={rightMountain} alt="background" className="absolute top-0 right-0 w-[410px] h-auto" />
 
         <div className="absolute top-0 right-0">
-          <MountainPath numQuestions={questions.length} />
+          <MountainPath numQuestions={questions.length} currentQuestionIndex={currentQuestionIndex} />
         </div>
 
         <Header />

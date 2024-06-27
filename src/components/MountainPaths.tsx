@@ -1,4 +1,5 @@
 import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
+import { motion } from 'framer-motion';
 
 import PinYellow from '../assets/images/pin_jaune.svg';
 import PinRed from '../assets/images/pin_rouge.svg';
@@ -16,9 +17,10 @@ import FlagPurple from '../assets/images/drapeau_violet.svg';
 
 interface MountainPathProps {
   numQuestions: number;
+  currentQuestionIndex: number;
 }
 
-export const MountainPath = ({ numQuestions }: MountainPathProps) => {
+export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPathProps) => {
   const { quizzIndex } = useQuizzTitleStore();
 
   const predefinedPoints = [
@@ -56,45 +58,96 @@ export const MountainPath = ({ numQuestions }: MountainPathProps) => {
   const uniqueNonIntermediateIndices = [...new Set(nonIntermediateIndices)].sort((a, b) => a - b);
   const points = predefinedPoints.map((point, index) => ({
     ...point,
-    isIntermediate: !uniqueNonIntermediateIndices.includes(index),
+    isIntermediate: !uniqueNonIntermediateIndices.includes(index) || index === 0,
   }));
-  points[0].isIntermediate = true;
 
   const colorMapping = [
-    { pin: PinYellow, flag: FlagYellow },
-    { pin: PinRed, flag: FlagRed },
-    { pin: PinBrown, flag: FlagBrown },
-    { pin: PinPink, flag: FlagPink },
-    { pin: PinBlue, flag: FlagBlue },
-    { pin: PinPurple, flag: FlagPurple },
+    { pin: PinYellow, flag: FlagYellow, color: 'text-accent-yellow' },
+    { pin: PinRed, flag: FlagRed, color: 'text-accent-red' },
+    { pin: PinBrown, flag: FlagBrown, color: 'text-accent-brown' },
+    { pin: PinPink, flag: FlagPink, color: 'text-accent-pink' },
+    { pin: PinBlue, flag: FlagBlue, color: 'text-accent-blue' },
+    { pin: PinPurple, flag: FlagPurple, color: 'text-accent-purple' },
   ];
 
-  const { pin, flag } = colorMapping[quizzIndex] || colorMapping[0];
+  const { pin, flag, color } = colorMapping[quizzIndex] || colorMapping[0];
+
+  const blackSegments: number[] = [];
+
+  const updateBlackSegments = () => {
+    blackSegments.length = 0;
+    for (let i = 0; i < uniqueNonIntermediateIndices.length - 1; i++) {
+      if (currentQuestionIndex > i) {
+        const startIndex = uniqueNonIntermediateIndices[i];
+        const endIndex = uniqueNonIntermediateIndices[i + 1];
+        for (let j = startIndex; j < endIndex; j++) {
+          blackSegments.push(j);
+        }
+      }
+    }
+  };
+
+  updateBlackSegments();
 
   return (
     <svg width="410px" height="338px" xmlns="http://www.w3.org/2000/svg" className="relative">
       {points.slice(0, -1).map((point, index) => (
-        <line
-          key={index}
-          x1={point.cx}
-          y1={point.cy}
-          x2={points[index + 1].cx}
-          y2={points[index + 1].cy}
-          className="stroke-current text-white stroke-2"
-        />
-      ))}
-      {points.map(
-        (point, index) =>
-          !point.isIntermediate && (
-            <circle
-              key={index}
-              cx={point.cx}
-              cy={point.cy}
-              r="3"
-              className="fill-current text-white stroke-current stroke-2"
+        <g key={index}>
+          <line
+            x1={point.cx}
+            y1={point.cy}
+            x2={points[index + 1].cx}
+            y2={points[index + 1].cy}
+            className="stroke-current text-white stroke-2"
+          />
+          {blackSegments.includes(index) && (
+            <motion.line
+              key={`motion-line-${index}`}
+              x1={point.cx}
+              y1={point.cy}
+              x2={points[index + 1].cx}
+              y2={points[index + 1].cy}
+              className={`stroke-current ${color} stroke-2`}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{
+                duration: 0.5,
+                delay: (index - (uniqueNonIntermediateIndices[currentQuestionIndex - 1] || 0)) * 0.5,
+              }}
             />
+          )}
+        </g>
+      ))}
+
+      {points.map((point, index) => {
+        const isAnimated = !point.isIntermediate && uniqueNonIntermediateIndices.includes(index);
+        const lastBlackSegmentIndex =
+          uniqueNonIntermediateIndices[currentQuestionIndex] !== undefined
+            ? uniqueNonIntermediateIndices[currentQuestionIndex] - 1
+            : null;
+
+        return (
+          !point.isIntermediate && (
+            <g key={index}>
+              <circle cx={point.cx} cy={point.cy} r="3" className="fill-current text-white stroke-current stroke-2" />
+              {isAnimated && index === lastBlackSegmentIndex! + 1 && (
+                <motion.circle
+                  cx={point.cx}
+                  cy={point.cy}
+                  r="2.5"
+                  className={`fill-current ${color}`}
+                  initial={{ r: 0 }}
+                  animate={{
+                    r: 2.5,
+                    transition: { repeat: Infinity, duration: 1, delay: (lastBlackSegmentIndex! - 1) * 0.5 },
+                  }}
+                />
+              )}
+            </g>
           )
-      )}
+        );
+      })}
+
       <image href={pin} x={points[0].cx - 15} y={points[0].cy - 30} width="30" height="30" />
       <image
         href={flag}

@@ -120,28 +120,30 @@ export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPat
       ))}
 
       {points.map((point, index) => {
-        const isAnimated = !point.isIntermediate && uniqueNonIntermediateIndices.includes(index);
-        const lastBlackSegmentIndex =
-          uniqueNonIntermediateIndices[currentQuestionIndex] !== undefined
-            ? uniqueNonIntermediateIndices[currentQuestionIndex] - 1
-            : null;
+        const isCurrentQuestionPoint = uniqueNonIntermediateIndices[currentQuestionIndex] === index;
+        const allPreviousQuestionPoints = uniqueNonIntermediateIndices.slice(0, currentQuestionIndex);
 
         return (
           !point.isIntermediate && (
             <g key={index}>
               <circle cx={point.cx} cy={point.cy} r="3" className="fill-current text-white stroke-current stroke-2" />
-              {isAnimated && index === lastBlackSegmentIndex! + 1 && (
+              {isCurrentQuestionPoint && (
                 <motion.circle
                   cx={point.cx}
                   cy={point.cy}
                   r="2.5"
                   className={`fill-current ${color}`}
                   initial={{ r: 0 }}
-                  animate={{
-                    r: 2.5,
-                    transition: { repeat: Infinity, duration: 1, delay: (lastBlackSegmentIndex! - 1) * 0.5 },
+                  animate={{ r: 2.5 }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 1,
+                    delay: (index - (uniqueNonIntermediateIndices[currentQuestionIndex - 1] || 0)) * 0.5,
                   }}
                 />
+              )}
+              {allPreviousQuestionPoints.includes(index) && (
+                <circle cx={point.cx} cy={point.cy} r="2.5" className={`fill-current ${color}`} />
               )}
             </g>
           )

@@ -1,6 +1,6 @@
 export enum Routes {
   Home = '/',
   Menu = '/menu',
-  Quizz = '/quizz',
+  Quiz = '/quiz',
   Base = '/amgen',
 }

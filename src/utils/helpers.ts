@@ -5,7 +5,7 @@ import { STORAGE_KEYS } from './variables';
 ******************************************************************************/
 
 interface QuizAnswer {
-  quizzTitle: string;
+  quizTitle: string;
   answers: {
     question: string;
     selectedAnswers: string[];
@@ -22,17 +22,17 @@ export const initializeQuizAnswers = (): QuizAnswer[] => {
 };
 
 // Save quiz answers to local storage
-export const saveQuizAnswer = (quizzTitle: string, answer: { question: string; selectedAnswers: string[] }) => {
+export const saveQuizAnswer = (quizTitle: string, answer: { question: string; selectedAnswers: string[] }) => {
   if (answer.selectedAnswers.length === 0) return;
 
   const quizAnswers = initializeQuizAnswers();
-  const existingAnswerIndex = quizAnswers.findIndex((resp) => resp.quizzTitle === quizzTitle);
+  const existingAnswerIndex = quizAnswers.findIndex((resp) => resp.quizTitle === quizTitle);
 
   if (existingAnswerIndex !== -1) {
     quizAnswers[existingAnswerIndex].answers.push(answer);
   } else {
     quizAnswers.push({
-      quizzTitle,
+      quizTitle,
       answers: [answer],
     });
   }

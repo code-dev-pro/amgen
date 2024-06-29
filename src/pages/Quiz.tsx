@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
+import { useQuizTitleStore } from '../hooks/useQuizTitleStore';
 import { usePopupStore } from '../hooks/usePopupStore';
 import { Footer } from '../components/Footer';
 import { Timer } from '../components/Timer';
 import { ValidateButton } from '../components/buttons/ValidateButton';
 import { LearnMoreButton } from '../components/buttons/LearnMoreButton';
 import { CustomCheckbox } from '../components/Checkbox';
-import { QuizzCompletion } from '../components/QuizzCompletion';
+import { QuizCompletion } from '../components/QuizCompletion';
 import { Header } from '../components/Header';
 import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
@@ -20,9 +20,9 @@ import { data } from '../data';
 import leftMountain from '../assets/images/montagne_autres.png';
 import rightMountain from '../assets/images/montagne-seule.png';
 
-const Quizz = () => {
+const Quiz = () => {
   const { isPopupOpen } = usePopupStore();
-  const { quizzTitle } = useQuizzTitleStore();
+  const { quizTitle } = useQuizTitleStore();
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [questions, setQuestions] = useState([
     {
@@ -42,12 +42,12 @@ const Quizz = () => {
   const [popupContent, setPopupContent] = useState<'learnMore' | 'completionContent'>('learnMore');
 
   useEffect(() => {
-    const categoryData = data.find((item) => item.title === quizzTitle);
-    if (categoryData && categoryData.quizz) {
-      const shuffledQuestions = categoryData.quizz.sort(() => 0.5 - Math.random()).slice(0, 10);
+    const categoryData = data.find((item) => item.title === quizTitle);
+    if (categoryData && categoryData.quiz) {
+      const shuffledQuestions = categoryData.quiz.sort(() => 0.5 - Math.random()).slice(0, 10);
       setQuestions(shuffledQuestions);
     }
-  }, [quizzTitle]);
+  }, [quizTitle]);
 
   const handleAnswerChange = (answer: string, isChecked: boolean) => {
     if (isChecked) {
@@ -67,7 +67,7 @@ const Quizz = () => {
       question: currentQuestion.question,
       selectedAnswers,
     };
-    saveQuizAnswer(quizzTitle, answer);
+    saveQuizAnswer(quizTitle, answer);
 
     setSelectedAnswers([]);
     if (currentQuestionIndex < questions.length - 1) {
@@ -78,7 +78,7 @@ const Quizz = () => {
   };
 
   const handleTimerComplete = () => {
-    saveQuizAnswer(quizzTitle, {
+    saveQuizAnswer(quizTitle, {
       question: currentQuestion.question,
       selectedAnswers,
     });
@@ -114,7 +114,7 @@ const Quizz = () => {
         </div>
 
         {quizCompleted ? (
-          <QuizzCompletion setCompletionContentPopup={setCompletionContentPopup} mountainName={quizzTitle} />
+          <QuizCompletion setCompletionContentPopup={setCompletionContentPopup} mountainName={quizTitle} />
         ) : (
           <div className="absolute top-[33%] left-0 w-full px-8">
             <div className="bg-accent-blue bg-opacity-25 px-10 py-6">
@@ -197,4 +197,4 @@ const Quizz = () => {
   );
 };
 
-export default Quizz;
+export default Quiz;

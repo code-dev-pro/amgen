@@ -26,7 +26,7 @@ export const predefinedPoints = [
   { cx: 220, cy: 45, isIntermediate: false },
 ];
 
-// Colors for the mountain path matching the quizz index
+// Colors for the mountain path matching the quiz index
 export const colorMapping = [
   { color: '#FFE900', textColor: 'text-accent-yellow' },
   { color: '#C81806', textColor: 'text-accent-red' },

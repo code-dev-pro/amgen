@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQuizzTitleStore } from '../../hooks/useQuizzTitleStore';
+import { useQuizTitleStore } from '../../hooks/useQuizTitleStore';
 import { Pin } from './Pin';
 import { Flag } from './Flag';
 import { Checkpoint, Segment } from './Checkpoints';
@@ -12,8 +12,8 @@ interface MountainPathProps {
 }
 
 export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPathProps) => {
-  const { quizzIndex } = useQuizzTitleStore();
-  const { color, textColor } = colorMapping[quizzIndex] || colorMapping[0];
+  const { quizIndex } = useQuizTitleStore();
+  const { color, textColor } = colorMapping[quizIndex] || colorMapping[0];
 
   const checkpoints = useMemo(() => calculateCheckpoints(predefinedPoints, numQuestions), [numQuestions]);
   const blackSegments = useMemo(

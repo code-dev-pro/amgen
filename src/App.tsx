@@ -7,7 +7,7 @@ import Wrapper from './components/Wrapper';
 
 const Home = lazy(() => import('./pages/Home'));
 const Menu = lazy(() => import('./pages/Menu'));
-const Quizz = lazy(() => import('./pages/Quizz'));
+const Quiz = lazy(() => import('./pages/Quiz'));
 
 const router = createBrowserRouter(
   [
@@ -31,11 +31,11 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: Routes.Quizz,
+      path: Routes.Quiz,
       element: (
         <Suspense fallback={<Loader />}>
           <Wrapper>
-            <Quizz />
+            <Quiz />
           </Wrapper>
         </Suspense>
       ),

@@ -3,12 +3,12 @@ import { usePopupStore } from '../hooks/usePopupStore';
 import { useUserProgressStore } from '../hooks/useUserProgressStore';
 import { Routes } from '../utils/routes';
 
-interface QuizzCompletionProps {
+interface QuizCompletionProps {
   mountainName: string;
   setCompletionContentPopup: () => void;
 }
 
-export const QuizzCompletion = ({ setCompletionContentPopup, mountainName }: QuizzCompletionProps) => {
+export const QuizCompletion = ({ setCompletionContentPopup, mountainName }: QuizCompletionProps) => {
   const { setPopupOpen } = usePopupStore();
   const markMountainAsCompleted = useUserProgressStore((state) => state.markMountainAsCompleted);
   const navigate = useNavigate();

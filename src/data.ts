@@ -3,7 +3,7 @@ export const data = [
     title: 'Cardio-Métabolisme',
     titleHTML: 'Cardio-<br />Métabolisme',
     category: 'cardio',
-    quizz: [
+    quiz: [
       {
         question: 'Quelles sont les plus grandes capitales du monde ?',
         options: ['Berlin', 'Madrid', 'Paris', 'Lisbonne'],
@@ -110,7 +110,7 @@ export const data = [
     title: "Histoire d'AMGEN",
     titleHTML: "Histoire <br />d'AMGEN",
     category: '',
-    quizz: [
+    quiz: [
       {
         question: 'Quelles sont les unités de mesure du vent ?',
         options: ['Noeuds', 'Newton', 'Km/h', 'Joule'],
@@ -177,7 +177,7 @@ export const data = [
     title: 'Fondation AMGEN',
     titleHTML: 'Fondation <br />AMGEN',
     category: '',
-    quizz: [
+    quiz: [
       {
         question: 'Quelles sont les unités de mesure du vent ?',
         options: ['Noeuds', 'Newton', 'Km/h', 'Joule'],
@@ -204,7 +204,7 @@ export const data = [
     title: 'Recherche & Développement',
     titleHTML: 'Recherche &<br /> Développement',
     category: '',
-    quizz: [
+    quiz: [
       {
         question: 'Quelles sont les unités de mesure du vent ?',
         options: ['Noeuds', 'Newton', 'Km/h', 'Joule'],
@@ -251,7 +251,7 @@ export const data = [
     title: "Expertise d'AMGEN",
     titleHTML: "Expertise <br />d'AMGEN",
     category: '',
-    quizz: [
+    quiz: [
       {
         question: 'Quelles sont les unités de mesure du vent ?',
         options: ['Noeuds', 'Newton', 'Km/h', 'Joule'],
@@ -308,7 +308,7 @@ export const data = [
     title: 'Exploration suprise',
     titleHTML: 'Exploration <br />suprise',
     category: '',
-    quizz: [
+    quiz: [
       {
         question: 'Quelles sont les unités de mesure du vent ?',
         options: ['Noeuds', 'Newton', 'Km/h', 'Joule'],

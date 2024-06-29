@@ -6,7 +6,7 @@ import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
 import { HomeButton } from '../components/buttons/HomeButton';
 import { usePopupStore } from '../hooks/usePopupStore';
-import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
+import { useQuizTitleStore } from '../hooks/useQuizTitleStore';
 import { useUserProgressStore } from '../hooks/useUserProgressStore';
 import { data } from '../data';
 import { Routes } from '../utils/routes';
@@ -27,7 +27,7 @@ const Menu = () => {
 
   const navigate = useNavigate();
   const { isPopupOpen, setPopupOpen } = usePopupStore();
-  const { setQuizzIndex, setQuizzTitle, setQuizzCategory } = useQuizzTitleStore();
+  const { setQuizIndex, setQuizTitle, setQuizCategory } = useQuizTitleStore();
   const completedMountains = useUserProgressStore((state) => state.completedMountains);
 
   const handleMailIconClick = () => {
@@ -82,10 +82,10 @@ const Menu = () => {
             )}
             disabled={completedMountains.includes(item.title)}
             onClick={() => {
-              setQuizzIndex(index);
-              setQuizzTitle(item.title);
-              setQuizzCategory(item.category);
-              navigate(Routes.Quizz);
+              setQuizIndex(index);
+              setQuizTitle(item.title);
+              setQuizCategory(item.category);
+              navigate(Routes.Quiz);
             }}
           />
         ))}

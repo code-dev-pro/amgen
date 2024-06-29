@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ValidateButton } from '../buttons/ValidateButton';
 import { CustomCheckbox } from '../Checkbox';
-import { STORAGE_KEYS } from '../../utils/storageKeys';
+import { STORAGE_KEYS } from '../../utils/variables';
 
 const schema = z.object({
   contentPreference: z.string().min(1, { message: 'Ce champ est requis' }),

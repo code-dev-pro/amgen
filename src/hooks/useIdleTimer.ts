@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Routes } from '../utils/routes';
-import { IDLE_TIMEOUT } from '../utils/timeout';
+import { IDLE_TIMEOUT } from '../utils/variables';
 
 export const useIdleTimer = (timeout = IDLE_TIMEOUT) => {
   const [isIdle, setIsIdle] = useState(false);

@@ -13,7 +13,7 @@ import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
 import { PlainText } from '../components/popup/PlainText';
 import { ZoomableImage } from '../components/popup/ZoomableImage';
-import { MountainPath } from '../components/MountainPaths';
+import { MountainPath } from '../components/progressTracker/MountainPath';
 import { saveQuizAnswer } from '../utils/helpers';
 import { data } from '../data';
 

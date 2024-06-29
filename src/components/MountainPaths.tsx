@@ -1,19 +1,7 @@
 import { useQuizzTitleStore } from '../hooks/useQuizzTitleStore';
 import { motion } from 'framer-motion';
-
-import PinYellow from '../assets/images/pin_jaune.svg';
-import PinRed from '../assets/images/pin_rouge.svg';
-import PinBrown from '../assets/images/pin_marron.svg';
-import PinPink from '../assets/images/pin_rose.svg';
-import PinBlue from '../assets/images/pin_bleu.svg';
-import PinPurple from '../assets/images/pin_violet.svg';
-
-import FlagYellow from '../assets/images/drapeau_jaune.svg';
-import FlagRed from '../assets/images/drapeau_rouge.svg';
-import FlagBrown from '../assets/images/drapeau_marron.svg';
-import FlagPink from '../assets/images/drapeau_rose.svg';
-import FlagBlue from '../assets/images/drapeau_bleu.svg';
-import FlagPurple from '../assets/images/drapeau_violet.svg';
+import { Pin } from './Pin';
+import { Flag } from './Flag';
 
 interface MountainPathProps {
   numQuestions: number;
@@ -21,8 +9,6 @@ interface MountainPathProps {
 }
 
 export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPathProps) => {
-  const { quizzIndex } = useQuizzTitleStore();
-
   const predefinedPoints = [
     { cx: 85, cy: 245, isIntermediate: true }, // Point de départ
     { cx: 126, cy: 240, isIntermediate: false },
@@ -43,8 +29,21 @@ export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPat
     { cx: 220, cy: 45, isIntermediate: false }, // Point d'arrivée
   ];
 
+  const colorMapping = [
+    { color: '#FFE900', textColor: 'text-accent-yellow' },
+    { color: '#C81806', textColor: 'text-accent-red' },
+    { color: '#511F0D', textColor: 'text-accent-brown' },
+    { color: '#FF9CB2', textColor: 'text-accent-pink' },
+    { color: '#003B8C', textColor: 'text-accent-blue' },
+    { color: '#703684', textColor: 'text-accent-purple' },
+  ];
+
+  const { quizzIndex } = useQuizzTitleStore();
+  const { color, textColor } = colorMapping[quizzIndex] || colorMapping[0];
+
   const totalPoints = predefinedPoints.length;
   const nonIntermediateIndices = [0, totalPoints - 1];
+  const blackSegments: number[] = [];
 
   if (numQuestions > 2) {
     const step = (totalPoints - 1) / (numQuestions - 1);
@@ -61,19 +60,6 @@ export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPat
     isIntermediate: !uniqueNonIntermediateIndices.includes(index) || index === 0,
   }));
 
-  const colorMapping = [
-    { pin: PinYellow, flag: FlagYellow, color: 'text-accent-yellow' },
-    { pin: PinRed, flag: FlagRed, color: 'text-accent-red' },
-    { pin: PinBrown, flag: FlagBrown, color: 'text-accent-brown' },
-    { pin: PinPink, flag: FlagPink, color: 'text-accent-pink' },
-    { pin: PinBlue, flag: FlagBlue, color: 'text-accent-blue' },
-    { pin: PinPurple, flag: FlagPurple, color: 'text-accent-purple' },
-  ];
-
-  const { pin, flag, color } = colorMapping[quizzIndex] || colorMapping[0];
-
-  const blackSegments: number[] = [];
-
   const updateBlackSegments = () => {
     blackSegments.length = 0;
     for (let i = 0; i < uniqueNonIntermediateIndices.length - 1; i++) {
@@ -86,7 +72,6 @@ export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPat
       }
     }
   };
-
   updateBlackSegments();
 
   return (
@@ -107,7 +92,7 @@ export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPat
               y1={point.cy}
               x2={points[index + 1].cx}
               y2={points[index + 1].cy}
-              className={`stroke-current ${color} stroke-2`}
+              className={`stroke-current ${textColor} stroke-2`}
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
               transition={{
@@ -132,7 +117,7 @@ export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPat
                   cx={point.cx}
                   cy={point.cy}
                   r="2.5"
-                  className={`fill-current ${color}`}
+                  className={`fill-current ${textColor}`}
                   initial={{ r: 0 }}
                   animate={{ r: 2.5 }}
                   transition={{
@@ -143,20 +128,20 @@ export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPat
                 />
               )}
               {allPreviousQuestionPoints.includes(index) && (
-                <circle cx={point.cx} cy={point.cy} r="2.5" className={`fill-current ${color}`} />
+                <circle cx={point.cx} cy={point.cy} r="2.5" className={`fill-current ${textColor}`} />
               )}
             </g>
           )
         );
       })}
 
-      <image href={pin} x={points[0].cx - 15} y={points[0].cy - 30} width="30" height="30" />
-      <image
-        href={flag}
+      <Pin x={points[0].cx - 15} y={points[0].cy - 30} width="30" height="30" color={color} />
+      <Flag
         x={points[points.length - 1].cx - 5}
         y={points[points.length - 1].cy - 30}
         width="30"
         height="30"
+        color={colorMapping[quizzIndex].color}
       />
     </svg>
   );

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { usePopupStore } from '../hooks/usePopupStore';
-import { useUserProgressStore } from '../hooks/useUserProgressStore';
+import { usePopupStore } from '../stores/popupStore';
+import { useUserProgressStore } from '../stores/userProgressStore';
+import { Form } from './popup/Form';
 import { Routes } from '../utils/routes';
 
 interface QuizCompletionProps {
@@ -9,7 +10,7 @@ interface QuizCompletionProps {
 }
 
 export const QuizCompletion = ({ setCompletionContentPopup, mountainName }: QuizCompletionProps) => {
-  const { setPopupOpen } = usePopupStore();
+  const { openPopup } = usePopupStore();
   const markMountainAsCompleted = useUserProgressStore((state) => state.markMountainAsCompleted);
   const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ export const QuizCompletion = ({ setCompletionContentPopup, mountainName }: Quiz
 
   const handleCompletionClick = () => {
     setCompletionContentPopup();
-    setPopupOpen(true);
+    openPopup('form', <Form />);
   };
 
   return (

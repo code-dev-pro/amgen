@@ -5,9 +5,9 @@ import { Footer } from '../components/Footer';
 import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
 import { HomeButton } from '../components/buttons/HomeButton';
-import { usePopupStore } from '../hooks/usePopupStore';
-import { useQuizTitleStore } from '../hooks/useQuizTitleStore';
-import { useUserProgressStore } from '../hooks/useUserProgressStore';
+import { usePopupStore } from '../stores/popupStore';
+import { useQuizStore } from '../stores/quizStore';
+import { useUserProgressStore } from '../stores/userProgressStore';
 import { data } from '../data';
 import { Routes } from '../utils/routes';
 
@@ -26,12 +26,12 @@ const Menu = () => {
   ];
 
   const navigate = useNavigate();
-  const { isPopupOpen, setPopupOpen } = usePopupStore();
-  const { setQuizIndex, setQuizTitle, setQuizCategory } = useQuizTitleStore();
+  const { isPopupOpen, openPopup } = usePopupStore();
+  const { setQuizIndex, setQuizTitle, setQuizCategory } = useQuizStore();
   const completedMountains = useUserProgressStore((state) => state.completedMountains);
 
   const handleMailIconClick = () => {
-    setPopupOpen(true);
+    openPopup('form', <Form />);
   };
 
   const sanitizeHtml = (html: string) => ({
@@ -91,11 +91,7 @@ const Menu = () => {
         ))}
       </div>
 
-      {isPopupOpen && (
-        <Popup>
-          <Form />
-        </Popup>
-      )}
+      {isPopupOpen && <Popup>{usePopupStore.getState().popupContent}</Popup>}
 
       <Footer />
     </>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface TimerProps {
   onComplete: () => void;
@@ -10,37 +10,49 @@ export const Timer = ({ onComplete, isPaused, isFinished }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(180);
   const totalDuration = 180;
 
+  const resetTimer = useCallback(() => {
+    setTimeLeft(0);
+  }, []);
+
+  const restartTimer = useCallback(() => {
+    setTimeLeft(totalDuration);
+  }, [totalDuration]);
+
   useEffect(() => {
     if (isFinished) {
-      setTimeLeft(0);
+      resetTimer();
     }
-  }, [isFinished]);
+  }, [isFinished, resetTimer]);
 
   useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => Math.max(prevTime - 1, 0));
-    }, 1000);
-
+    let timer: ReturnType<typeof setInterval>;
+    if (!isPaused && !isFinished && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          const newTime = Math.max(prevTime - 1, 0);
+          if (newTime === 0) {
+            onComplete();
+          }
+          return newTime;
+        });
+      }, 1000);
+    }
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, isFinished, timeLeft, onComplete]);
 
   useEffect(() => {
-    if (timeLeft === 0) {
-      onComplete();
+    if (!isFinished) {
+      restartTimer();
     }
-  }, [timeLeft, onComplete]);
+  }, [restartTimer, isFinished]);
 
   const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
   const seconds = String(timeLeft % 60).padStart(2, '0');
 
   const circleStyle = {
-    background: `conic-gradient(#00004E ${(timeLeft / totalDuration) * 360}deg, transparent 0)`,
+    background:
+      timeLeft === 0 ? '#00004E' : `conic-gradient(#00004E ${(timeLeft / totalDuration) * 360}deg, transparent 0)`,
   };
-
-  if (timeLeft === 0) {
-    circleStyle.background = '#00004E';
-  }
 
   return (
     <div className="relative w-[85px] h-[85px] flex justify-center items-center">

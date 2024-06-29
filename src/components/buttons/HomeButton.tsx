@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Routes } from '../../utils/routes';
-import { useUserProgressStore } from '../../hooks/useUserProgressStore';
+import { useUserProgressStore } from '../../stores/userProgressStore';
 
 import homeIcon from '../../assets/images/icon_home_off.svg';
 

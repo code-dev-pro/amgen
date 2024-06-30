@@ -38,10 +38,10 @@ export const colorMapping = [
 
 // Styles for mountain buttons on the menu page
 export const mountainStyles = [
-  { top: '250px', left: '30px' },
-  { top: '350px', left: '170px' },
-  { top: '250px', left: '320px' },
-  { top: '200px', left: '510px' },
-  { top: '300px', left: '720px' },
-  { top: '250px', left: '850px' },
+  { top: '37%', left: '9%' },
+  { top: '50%', left: '22%' },
+  { top: '40%', left: '37%' },
+  { top: '30%', left: '58%' },
+  { top: '45%', left: '75%' },
+  { top: '37%', left: '90%' },
 ];

@@ -103,3 +103,27 @@ export const calculateDelay = (index: number, currentQuestionIndex: number, chec
   const previousNonIntermediateIndex = nonIntermediateIndices[currentQuestionIndex - 1] || 0;
   return (index - previousNonIntermediateIndex) * 0.5;
 };
+
+/**************************************************************************
+  Mountain button position adjustment
+******************************************************************************/
+
+export const adjustPosition = (position: string, aspectRatio: '16:9' | '4:3', isHorizontal: boolean) => {
+  if (aspectRatio === '4:3') return position;
+
+  const numericPosition = parseFloat(position);
+
+  if (isHorizontal) {
+    if (numericPosition < 40) {
+      return `calc(${position} + ${(50 - numericPosition) * 0.3}%)`;
+    } else if (numericPosition > 50 && numericPosition < 70) {
+      return `calc(${position} - ${(numericPosition - 50) * 0.15}%)`;
+    } else if (numericPosition > 70) {
+      return `calc(${position} - ${(numericPosition - 50) * 0.3}%)`;
+    }
+  } else {
+    return `calc(${position} - 1%)`;
+  }
+
+  return position;
+};

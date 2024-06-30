@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Footer } from '../components/Footer';
 import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
@@ -22,6 +22,18 @@ const Menu = () => {
   const { isPopupOpen, openPopup } = usePopupStore();
   const { setQuizIndex, setQuizTitle, setQuizCategory } = useQuizStore();
   const completedMountains = useUserProgressStore((state) => state.completedMountains);
+  const [aspectRatio, setAspectRatio] = useState<'16:9' | '4:3'>('4:3');
+
+  useEffect(() => {
+    const updateAspectRatio = () => {
+      const ratio = window.innerWidth / window.innerHeight;
+      setAspectRatio(ratio > 1.6 ? '16:9' : '4:3');
+    };
+
+    updateAspectRatio();
+    window.addEventListener('resize', updateAspectRatio);
+    return () => window.removeEventListener('resize', updateAspectRatio);
+  }, []);
 
   const handleMailIconClick = () => {
     openPopup('form', <Form />);
@@ -38,13 +50,16 @@ const Menu = () => {
   );
 
   return (
-    <>
+    <div className="relative w-full h-screen">
       <div
-        className={clsx('relative min-h-screen w-screen bg-cover bg-center', { 'blur-sm': isPopupOpen })}
-        style={{ backgroundImage: `url(${backgroundMenu})` }}
+        className={clsx('absolute inset-0 bg-cover bg-center', { 'blur-sm': isPopupOpen })}
+        style={{
+          backgroundImage: `url(${backgroundMenu})`,
+          backgroundPosition: aspectRatio === '4:3' ? 'center center' : 'center top',
+        }}
       >
-        <div className="w-full flex items-end space-x-10 p-8">
-          <img src={logo} alt="Logo" width={241} height={90} />
+        <div className="absolute top-0 left-0 w-full p-8 flex items-end space-x-10">
+          <img src={logo} alt="Logo" className="w-60" />
 
           <div className="text-white font-notoSans text-xl">
             <p className="font-extrabold text-3xl text-accent-blue">À vous de jouer !</p>
@@ -73,14 +88,13 @@ const Menu = () => {
             mountainStyles={mountainStyles[index]}
             disabled={completedMountains.includes(item.title)}
             onClick={() => handleMountainClick(index, item)}
+            aspectRatio={aspectRatio}
           />
         ))}
       </div>
-
       {isPopupOpen && <Popup>{usePopupStore.getState().popupContent}</Popup>}
-
       <Footer />
-    </>
+    </div>
   );
 };
 

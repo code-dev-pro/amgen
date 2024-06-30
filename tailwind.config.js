@@ -43,6 +43,9 @@ export default {
           },
         },
       },
+      screens: {
+        'aspect-16/9': { raw: '(min-aspect-ratio: 16/9)' },
+      },
     },
   },
   plugins: [],

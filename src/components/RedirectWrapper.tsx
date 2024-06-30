@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Wrapper = ({ children }: Props) => {
+const RedirectWrapper = ({ children }: Props) => {
   const { resetTimer } = useIdleTimer();
 
   useEffect(() => {
@@ -15,4 +15,4 @@ const Wrapper = ({ children }: Props) => {
   return <>{children}</>;
 };
 
-export default Wrapper;
+export default RedirectWrapper;

@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Loader } from './components/Loader';
 import { Routes } from './utils/routes';
 import ErrorPage from './pages/ErrorPage';
-import Wrapper from './components/Wrapper';
+import RedirectWrapper from './components/RedirectWrapper';
 
 const Home = lazy(() => import('./pages/Home'));
 const Menu = lazy(() => import('./pages/Menu'));
@@ -24,9 +24,9 @@ const router = createBrowserRouter(
       path: Routes.Menu,
       element: (
         <Suspense fallback={<Loader />}>
-          <Wrapper>
+          <RedirectWrapper>
             <Menu />
-          </Wrapper>
+          </RedirectWrapper>
         </Suspense>
       ),
     },
@@ -34,9 +34,9 @@ const router = createBrowserRouter(
       path: Routes.Quiz,
       element: (
         <Suspense fallback={<Loader />}>
-          <Wrapper>
+          <RedirectWrapper>
             <Quiz />
-          </Wrapper>
+          </RedirectWrapper>
         </Suspense>
       ),
     },

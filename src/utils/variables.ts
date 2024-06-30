@@ -35,3 +35,13 @@ export const colorMapping = [
   { color: '#003B8C', textColor: 'text-accent-blue' },
   { color: '#703684', textColor: 'text-accent-purple' },
 ];
+
+// Styles for mountain buttons on the menu page
+export const mountainStyles = [
+  { top: '250px', left: '30px' },
+  { top: '350px', left: '170px' },
+  { top: '250px', left: '320px' },
+  { top: '200px', left: '510px' },
+  { top: '300px', left: '720px' },
+  { top: '250px', left: '850px' },
+];

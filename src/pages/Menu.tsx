@@ -1,30 +1,23 @@
-import DOMPurify from 'dompurify';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 import { Footer } from '../components/Footer';
 import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
 import { HomeButton } from '../components/buttons/HomeButton';
+import { MountainButton } from '../components/buttons/MountainButton';
 import { usePopupStore } from '../stores/popupStore';
 import { useQuizStore } from '../stores/quizStore';
 import { useUserProgressStore } from '../stores/userProgressStore';
 import { data } from '../data';
 import { Routes } from '../utils/routes';
+import { mountainStyles } from '../utils/variables';
 
 import backgroundMenu from '../assets/images/fond_menu.jpg';
 import logo from '../assets/images/logo.svg';
 import mailIcon from '../assets/images/icon_mail_off.svg';
 
 const Menu = () => {
-  const mountainStyles = [
-    { top: '250px', left: '30px' },
-    { top: '350px', left: '170px' },
-    { top: '250px', left: '320px' },
-    { top: '200px', left: '510px' },
-    { top: '300px', left: '720px' },
-    { top: '250px', left: '850px' },
-  ];
-
   const navigate = useNavigate();
   const { isPopupOpen, openPopup } = usePopupStore();
   const { setQuizIndex, setQuizTitle, setQuizCategory } = useQuizStore();
@@ -34,15 +27,21 @@ const Menu = () => {
     openPopup('form', <Form />);
   };
 
-  const sanitizeHtml = (html: string) => ({
-    __html: DOMPurify.sanitize(html),
-  });
+  const handleMountainClick = useCallback(
+    (index: number, item: (typeof data)[0]) => {
+      setQuizIndex(index);
+      setQuizTitle(item.title);
+      setQuizCategory(item.category);
+      navigate(Routes.Quiz);
+    },
+    [setQuizIndex, setQuizTitle, setQuizCategory, navigate]
+  );
 
   return (
     <>
       <div
-        className={clsx('relative min-h-screen w-screen', { 'blur-sm': isPopupOpen })}
-        style={{ backgroundImage: `url(${backgroundMenu})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        className={clsx('relative min-h-screen w-screen bg-cover bg-center', { 'blur-sm': isPopupOpen })}
+        style={{ backgroundImage: `url(${backgroundMenu})` }}
       >
         <div className="w-full flex items-end space-x-10 p-8">
           <img src={logo} alt="Logo" width={241} height={90} />
@@ -67,26 +66,13 @@ const Menu = () => {
         </div>
 
         {data.map((item, index) => (
-          <button
+          <MountainButton
             key={index}
-            className={clsx('text-accent-blue font-white-on-black text-2xl block mb-4 whitespace-nowrap text-center', {
-              'opacity-50 cursor-not-allowed': completedMountains.includes(item.title),
-            })}
-            style={{
-              position: 'absolute',
-              top: mountainStyles[index].top,
-              left: mountainStyles[index].left,
-            }}
-            dangerouslySetInnerHTML={sanitizeHtml(
-              `<span class="text-white font-almaq text-lg uppercase">Mont</span> <br />${item.titleHTML}`
-            )}
+            item={item}
+            index={index}
+            mountainStyles={mountainStyles[index]}
             disabled={completedMountains.includes(item.title)}
-            onClick={() => {
-              setQuizIndex(index);
-              setQuizTitle(item.title);
-              setQuizCategory(item.category);
-              navigate(Routes.Quiz);
-            }}
+            onClick={() => handleMountainClick(index, item)}
           />
         ))}
       </div>

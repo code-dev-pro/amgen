@@ -1,8 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { stagger, useAnimate, animate } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ValidateButtonProps {
-  type?: 'submit' | 'reset' | 'button' | undefined;
+  type?: 'submit' | 'reset' | 'button';
   text?: string;
   onClick?: () => void;
   isDisabled?: boolean;
@@ -11,132 +12,85 @@ interface ValidateButtonProps {
   isAnimated?: boolean;
 }
 
-const randomNumberBetween = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-type AnimationSequence = Parameters<typeof animate>[0];
-
-export const ValidateButton = ({
-  type,
-  text,
+export const ValidateButton: React.FC<ValidateButtonProps> = ({
+  type = 'submit',
+  text = 'Valider',
   onClick,
-  isDisabled,
+  isDisabled = false,
   textColor,
   fontSize,
-  isAnimated,
-}: ValidateButtonProps) => {
-  const [scope, animate] = useAnimate();
+  isAnimated = false,
+}) => {
+  const [isClicked, setIsClicked] = useState(false);
 
-  const onButtonClick = () => {
-    const sparkles = Array.from({ length: 20 });
-    const sparklesAnimation: AnimationSequence = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        x: randomNumberBetween(-100, 100),
-        y: randomNumberBetween(-100, 100),
-        scale: randomNumberBetween(1.5, 2.5),
-        opacity: 1,
-      },
-      {
-        duration: 0.4,
-        at: '<',
-      },
-    ]);
-
-    const sparklesFadeOut: AnimationSequence = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        opacity: 0,
-        scale: 0,
-      },
-      {
-        duration: 0.3,
-        at: '<',
-      },
-    ]);
-
-    const sparklesReset: AnimationSequence = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        x: 0,
-        y: 0,
-      },
-      {
-        duration: 0.000001,
-      },
-    ]);
-
-    animate([
-      ...sparklesReset,
-      ['.letter', { y: -36 }, { duration: 0.2, delay: stagger(0.05) }],
-      ['button', { scale: 0.8 }, { duration: 0.1, at: '<' }],
-      ['button', { scale: 1 }, { duration: 0.1 }],
-      ...sparklesAnimation,
-      ['.letter', { y: 0 }, { duration: 0.000001 }],
-      ...sparklesFadeOut,
-    ]);
-
-    if (onClick) {
-      onClick();
+  useEffect(() => {
+    if (isClicked) {
+      const timer = setTimeout(() => setIsClicked(false), 500);
+      return () => clearTimeout(timer);
     }
+  }, [isClicked]);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (isDisabled) return;
+    setIsClicked(true);
+    if (type !== 'submit') {
+      event.preventDefault();
+    }
+    onClick?.();
   };
 
-  return isAnimated ? (
-    <div ref={scope}>
-      <button
-        type={type}
-        onClick={onButtonClick}
-        className={clsx(
-          'relative font-white-on-black z-20',
-          isDisabled ? 'opacity-20 cursor-not-allowed' : 'opacity-100',
-          textColor,
-          fontSize
-        )}
-      >
-        <span className="sr-only">{text}</span>
-        <span className="block h-9 overflow-hidden" aria-hidden>
-          {['V', 'a', 'l', 'i', 'd', 'e', 'r'].map((letter, index) => (
-            <span
-              data-letter={letter}
-              className="letter relative inline-block h-9 leading-9 after:absolute after:left-0 after:top-full after:h-9 after:content-[attr(data-letter)]"
-              key={`${letter}-${index}`}
-            >
-              {letter}
-            </span>
-          ))}
-        </span>
-        <span aria-hidden className="pointer-events-none absolute inset-0 z-[2] block">
-          {Array.from({ length: 20 }).map((_, index) => (
-            <svg
-              className={`absolute left-1/2 top-1/2 opacity-0 sparkle-${index}`}
-              key={index}
-              viewBox="0 0 122 117"
-              width="10"
-              height="10"
-            >
-              <path
-                className="fill-primary-dark-blue"
-                d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z"
-              />
-            </svg>
-          ))}
-        </span>
-      </button>
-    </div>
-  ) : (
-    <button
+  return (
+    <motion.button
       type={type}
-      onClick={onClick}
+      onClick={handleClick}
+      disabled={isDisabled}
       className={clsx(
-        'font-white-on-black',
+        'relative font-white-on-black overflow-hidden px-4 py-2 transition-transform duration-300',
         isDisabled ? 'opacity-20 cursor-not-allowed' : 'opacity-100',
         textColor,
         fontSize
       )}
-      disabled={isDisabled}
+      whileTap={{ scale: 0.95 }}
     >
-      {text}
-    </button>
+      {isAnimated ? (
+        <div className="relative w-40 h-10 overflow-hidden">
+          <AnimatePresence initial={false}>
+            {!isClicked ? (
+              <motion.span
+                key="validate"
+                initial={{ y: 40 }}
+                animate={{ y: 0 }}
+                exit={{ y: -40 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                {text}
+              </motion.span>
+            ) : (
+              <motion.span
+                key="loading"
+                initial={{ y: 40 }}
+                animate={{ y: 0 }}
+                exit={{ y: -40 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                Envoi...
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
+      ) : (
+        <span>{text}</span>
+      )}
+      {isClicked && isAnimated && (
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-0.5 bg-current"
+          initial={{ width: 0 }}
+          animate={{ width: '100%' }}
+          transition={{ duration: 0.5 }}
+        />
+      )}
+    </motion.button>
   );
 };

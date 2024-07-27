@@ -10,6 +10,7 @@ interface ValidateButtonProps {
   textColor?: string;
   fontSize?: string;
   isAnimated?: boolean;
+  isValid?: boolean;
 }
 
 export const ValidateButton: React.FC<ValidateButtonProps> = ({
@@ -20,22 +21,22 @@ export const ValidateButton: React.FC<ValidateButtonProps> = ({
   textColor,
   fontSize,
   isAnimated = false,
+  isValid = true,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
-    if (isClicked) {
+    if (!isValid) setIsClicked(false);
+    if (isClicked && isValid) {
       const timer = setTimeout(() => setIsClicked(false), 500);
       return () => clearTimeout(timer);
     }
-  }, [isClicked]);
+  }, [isClicked, isValid]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (isDisabled) return;
-    setIsClicked(true);
-    if (type !== 'submit') {
-      event.preventDefault();
-    }
+    if (isValid) setIsClicked(true);
+    if (type !== 'submit') event.preventDefault();
     onClick?.();
   };
 
@@ -52,7 +53,7 @@ export const ValidateButton: React.FC<ValidateButtonProps> = ({
       )}
       whileTap={{ scale: 0.95 }}
     >
-      {isAnimated ? (
+      {isAnimated && isValid ? (
         <div className="relative w-40 h-10 overflow-hidden">
           <AnimatePresence initial={false}>
             {!isClicked ? (
@@ -83,7 +84,7 @@ export const ValidateButton: React.FC<ValidateButtonProps> = ({
       ) : (
         <span>{text}</span>
       )}
-      {isClicked && isAnimated && (
+      {isClicked && isAnimated && isValid && (
         <motion.div
           className="absolute bottom-0 left-0 right-0 h-0.5 bg-current"
           initial={{ width: 0 }}

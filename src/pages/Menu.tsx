@@ -21,7 +21,7 @@ const Menu = () => {
   const navigate = useNavigate();
   const { isPopupOpen, openPopup } = usePopupStore();
   const { setQuizIndex, setQuizTitle, setQuizCategory } = useQuizStore();
-  const completedMountains = useUserProgressStore((state) => state.completedMountains);
+  const { completedMountains } = useUserProgressStore();
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '4:3'>('4:3');
 
   useEffect(() => {

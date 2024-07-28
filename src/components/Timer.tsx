@@ -25,20 +25,20 @@ export const Timer = ({ onComplete, isPaused, isFinished }: TimerProps) => {
   }, [isFinished, resetTimer]);
 
   useEffect(() => {
-    let timer: ReturnType<typeof setInterval>;
+    let timer: ReturnType<typeof setTimeout>;
     if (!isPaused && !isFinished && timeLeft > 0) {
       timer = setInterval(() => {
-        setTimeLeft((prevTime) => {
-          const newTime = Math.max(prevTime - 1, 0);
-          if (newTime === 0) {
-            onComplete();
-          }
-          return newTime;
-        });
+        setTimeLeft((prevTime) => Math.max(prevTime - 1, 0));
       }, 1000);
     }
     return () => clearInterval(timer);
-  }, [isPaused, isFinished, timeLeft, onComplete]);
+  }, [isPaused, isFinished, timeLeft]);
+
+  useEffect(() => {
+    if (timeLeft === 0 && !isFinished) {
+      onComplete();
+    }
+  }, [timeLeft, isFinished, onComplete]);
 
   useEffect(() => {
     if (!isFinished) {

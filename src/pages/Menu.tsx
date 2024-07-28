@@ -52,6 +52,7 @@ const Menu = () => {
   return (
     <div className="relative w-full h-screen">
       <div
+        data-testid="mountain-background"
         className={clsx('absolute inset-0 bg-cover bg-center', { 'blur-sm': isPopupOpen })}
         style={{
           backgroundImage: `url(${backgroundMenu})`,

@@ -14,9 +14,14 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen w-screen">
-      <img src={backgroundImage} alt="Montagne" className="absolute inset-0 h-full w-full object-cover" />
+      <img
+        src={backgroundImage}
+        alt="Montagne"
+        className="absolute inset-0 h-full w-full object-cover"
+        data-testid="mountain-background"
+      />
       <div className="absolute top-12 right-12">
-        <img src={logo} alt="Logo" width={546} height={213} />
+        <img src={logo} alt="Logo" width={546} height={213} data-testid="logo" />
       </div>
       <div className="absolute bottom-[291px] right-[86px]">
         <ExploreButton onClick={handleExploreButtonClick} />

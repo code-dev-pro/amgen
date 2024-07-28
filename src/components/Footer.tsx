@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <div className="absolute bottom-0 left-0 w-full h-[63px]">
+    <div className="absolute bottom-0 left-0 w-full h-[63px]" data-testid="footer">
       <div className="absolute inset-0 bg-footer-dark-blue opacity-80"></div>
       <div className="relative flex items-center justify-end h-full">
         <svg className="w-[105px] mr-8" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 282.2 69.7">

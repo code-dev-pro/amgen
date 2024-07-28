@@ -22,7 +22,13 @@ export const MountainPath = ({ numQuestions, currentQuestionIndex }: MountainPat
   );
 
   return (
-    <svg width="410px" height="338px" xmlns="http://www.w3.org/2000/svg" className="relative">
+    <svg
+      width="410px"
+      height="338px"
+      xmlns="http://www.w3.org/2000/svg"
+      className="relative"
+      data-testid="mountain-animation"
+    >
       {checkpoints.slice(0, -1).map((checkpoint, index) => (
         <Segment
           key={index}

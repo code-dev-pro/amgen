@@ -17,7 +17,14 @@ interface MountainButtonProps {
   aspectRatio: '16:9' | '4:3';
 }
 
-export const MountainButton = ({ item, mountainStyles, disabled, onClick, aspectRatio }: MountainButtonProps) => {
+export const MountainButton = ({
+  index,
+  item,
+  mountainStyles,
+  disabled,
+  onClick,
+  aspectRatio,
+}: MountainButtonProps) => {
   const sanitizeHtml = (html: string) => ({ __html: DOMPurify.sanitize(html) });
   const adjustedStyles = {
     top: adjustPosition(mountainStyles.top, aspectRatio, false),
@@ -26,6 +33,8 @@ export const MountainButton = ({ item, mountainStyles, disabled, onClick, aspect
 
   return (
     <button
+      role="button"
+      data-testid={`mountain-${index}`}
       className={clsx(
         'absolute text-accent-blue font-white-on-black whitespace-nowrap text-center transform -translate-x-1/2 -translate-y-1/2',
         'text-[2vw] aspect-16/9:text-[1.5vw]',

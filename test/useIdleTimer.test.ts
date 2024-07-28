@@ -1,7 +1,7 @@
-import { renderHook, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { useIdleTimer } from './useIdleTimer';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
+import { useIdleTimer } from '../src/hooks/useIdleTimer';
 
 describe('useIdleTimer', () => {
   beforeEach(() => {

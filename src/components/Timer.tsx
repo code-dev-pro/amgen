@@ -55,7 +55,7 @@ export const Timer = ({ onComplete, isPaused, isFinished }: TimerProps) => {
   };
 
   return (
-    <div className="relative w-[85px] h-[85px] flex justify-center items-center">
+    <div className="relative w-[85px] h-[85px] flex justify-center items-center" data-testid="timer">
       <div className="absolute w-full h-full rounded-full" style={circleStyle}></div>
       <div className="absolute text-white text-2xl font-bold font-almaq">
         {minutes}:{seconds}

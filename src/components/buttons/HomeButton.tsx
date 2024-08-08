@@ -1,15 +1,17 @@
-import { Link } from 'react-router-dom';
-import { Routes } from '../../utils/routes';
-import { useUserProgressStore } from '../../stores/userProgressStore';
-
 import homeIcon from '../../assets/images/icon_home_off.svg';
 
-export const HomeButton = ({ className }: { className?: string }) => {
-  const resetProgress = useUserProgressStore((state) => state.resetProgress);
+interface HomeButtonProps {
+  className?: string;
+  onClick?: () => void;
+}
 
+export const HomeButton = ({ className, onClick }: HomeButtonProps) => {
+  const handleClick = () => {
+    onClick && onClick();
+  };
   return (
-    <Link to={Routes.Home} onClick={resetProgress}>
+    <button onClick={handleClick}>
       <img src={homeIcon} alt="Accueil" width={26} height={26} className={className} />
-    </Link>
+    </button>
   );
 };

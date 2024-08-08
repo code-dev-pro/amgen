@@ -5,8 +5,9 @@ import logo from '../assets/images/logo.svg';
 import leftMountain from '../assets/images/montagne_autres.png';
 import rightMountain from '../assets/images/montagne-seule.png';
 
-export const Header = () => {
+export const Header = ({ onClick }: { onClick: () => void }) => {
   const { quizTitle, quizCategory } = useQuizStore();
+
   return (
     <header className="w-full px-8 py-4" data-testid="header">
       <img src={logo} alt="Logo" width={130} height={51} className="absolute top-8 left-8" />
@@ -20,7 +21,7 @@ export const Header = () => {
         {quizCategory !== '' && <p className="font-light">{quizCategory}</p>}
       </div>
 
-      <HomeButton className="absolute top-8 right-8 z-10" />
+      <HomeButton className="absolute top-8 right-8 z-10" onClick={onClick} />
     </header>
   );
 };

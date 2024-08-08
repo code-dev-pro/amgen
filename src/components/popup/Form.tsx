@@ -6,15 +6,15 @@ import { STORAGE_KEYS } from '../../utils/variables';
 
 const schema = z.object({
   contentPreference: z.string().min(1, { message: 'Ce champ est requis' }),
-  firstName: z.string().min(1, { message: 'Ce champ est requis' }),
-  lastName: z.string().min(1, { message: 'Ce champ est requis' }),
-  postalCode: z.string().min(1, { message: 'Ce champ est requis' }),
-  job: z.string().min(1, { message: 'Ce champ est requis' }),
-  email: z.string().min(1, { message: 'Ce champ est requis' }),
-  rpps: z.string().min(1, { message: 'Ce champ est requis' }),
-  address: z.string().min(1, { message: 'Ce champ est requis' }),
-  city: z.string().min(1, { message: 'Ce champ est requis' }),
-  phone: z.string().min(1, { message: 'Ce champ est requis' }),
+  firstName: z.string().min(1, 'Ce champ est requis').max(50, 'Le prénom ne doit pas dépasser 50 caractères.'),
+  lastName: z.string().min(1, 'Ce champ est requis').max(50, 'Le nom ne doit pas dépasser 50 caractères.'),
+  postalCode: z.string().regex(/^[0-9]{5}$/, 'Le code postal doit être composé de 5 chiffres.'),
+  job: z.string().min(1, 'Ce champ est requis').max(100, 'Le champ "Profession" ne doit pas dépasser 100 caractères.'),
+  email: z.string().email('Veuillez saisir une adresse e-mail valide.'),
+  rpps: z.string().regex(/^[0-9]{11}$/, 'Le RPPS doit être composé de 11 chiffres.'),
+  address: z.string().min(1, 'Ce champ est requis').max(200, "L'adresse ne doit pas dépasser 200 caractères."),
+  city: z.string().min(1, 'Ce champ est requis').max(100, 'La ville ne doit pas dépasser 100 caractères.'),
+  phone: z.string().regex(/^[0-9]{10}$/, 'Le numéro de téléphone doit être composé de 10 chiffres.'),
 });
 
 type FormData = z.infer<typeof schema>;

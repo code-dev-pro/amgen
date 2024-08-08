@@ -26,6 +26,21 @@ const Home = () => {
       <div className="absolute bottom-[291px] right-[86px]">
         <ExploreButton onClick={handleExploreButtonClick} />
       </div>
+
+      <p className="absolute bottom-[90px] right-[20px] text-xs text-right">
+        <span>AMGEN SAS,</span>
+        <br />
+        <span>Société par actions simplifiée</span>
+        <br />
+        <span>au capital de 307.500 euros</span>
+        <br />
+        <span>377 998 679 RC SNanterre,</span>
+        <br />
+        <span>25 Quai du Président Paul Doumer,</span>
+        <br />
+        <span>92400 Courbevoie</span>
+      </p>
+
       <Footer />
     </div>
   );

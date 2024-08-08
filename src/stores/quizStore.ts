@@ -11,6 +11,7 @@ interface Question {
     imageURL: string;
     imageAlt: string;
   };
+  refs: string[];
 }
 
 interface QuizState {

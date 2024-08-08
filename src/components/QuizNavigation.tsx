@@ -14,11 +14,11 @@ export const QuizNavigation = ({ onLearnMoreClick }: QuizNavigationProps) => {
   const isValidateButtonDisabled = selectedAnswers.length === 0;
 
   return (
-    <div className="text-center mt-6">
+    <div className="text-center mt-2">
       {isAnswerShown ? (
         <>
           <LearnMoreButton handleLearnMoreClick={onLearnMoreClick} />
-          <div className="mt-6">
+          <div className="mt-2">
             <ValidateButton text="Suivant" fontSize="text-4xl" onClick={handleNextClick} />
           </div>
         </>

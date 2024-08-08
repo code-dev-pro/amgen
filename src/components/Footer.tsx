@@ -2,7 +2,7 @@ export const Footer = () => {
   return (
     <div className="absolute bottom-0 left-0 w-full h-[63px]" data-testid="footer">
       <div className="absolute inset-0 bg-footer-dark-blue opacity-80"></div>
-      <div className="relative flex items-center justify-between h-full ml-10">
+      <div className="relative flex items-center justify-between h-full ml-8">
         <p className="text-xs">
           Ce document contient des informations sur des produits en cours de développement.
           <br />

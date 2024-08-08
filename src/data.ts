@@ -13,6 +13,11 @@ export const data = [
           imageURL: '',
           imageAlt: '',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: 'Quelles sont les plus grandes montagnes du monde ?',
@@ -23,6 +28,11 @@ export const data = [
           imageURL: 'savoir_txt.png',
           imageAlt: 'test',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: 'Quels sont les plus longs fleuves du monde ?',
@@ -33,6 +43,11 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: 'Quelles sont les plus grandes îles du monde ?',
@@ -43,6 +58,11 @@ export const data = [
           imageURL: '',
           imageAlt: '',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: 'Quels pays ont la plus grande population ?',
@@ -53,6 +73,11 @@ export const data = [
           imageURL: 'savoir_txt.png',
           imageAlt: 'test',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: 'Quelles sont les capitales des pays suivants ?',
@@ -63,6 +88,11 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: "Quelles mers se trouvent entre l'Europe et l'Afrique ?",
@@ -73,6 +103,11 @@ export const data = [
           imageURL: '',
           imageAlt: '',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: 'Quels sont les plus grands déserts du monde ?',
@@ -83,6 +118,11 @@ export const data = [
           imageURL: 'savoir_txt.png',
           imageAlt: 'test',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: 'Quels sont les plus grands océans du monde ?',
@@ -93,6 +133,11 @@ export const data = [
           imageURL: '',
           imageAlt: '',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
       {
         question: 'Quelles sont les capitales des provinces canadiennes suivantes ?',
@@ -103,6 +148,11 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: [
+          '1. HAS. Bon usage du médicament. Les médicaments biosimilaires. 2017.',
+          '2. ANSM. État des lieux sur les médicaments biosimilaires. 2022.',
+          '3. Accord cadre du 05/03/2021 entre le Comité Économique des Produits de Santé et Les Entreprises du Médicament.',
+        ],
       },
     ],
   },
@@ -120,6 +170,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -130,6 +181,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -140,6 +192,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -150,6 +203,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -160,6 +214,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -170,6 +225,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
     ],
   },
@@ -187,6 +243,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -197,6 +254,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
     ],
   },
@@ -214,6 +272,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -224,6 +283,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -234,6 +294,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -244,6 +305,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
     ],
   },
@@ -261,6 +323,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -271,6 +334,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -281,6 +345,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -291,6 +356,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -301,6 +367,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
     ],
   },
@@ -318,6 +385,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -328,6 +396,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
       {
         question: 'Quelles sont les unités de mesure du vent ?',
@@ -338,6 +407,7 @@ export const data = [
           imageURL: 'savoir_document.jpg',
           imageAlt: 'test',
         },
+        refs: ['lorem ipsum', 'lorem ipsum', 'lorem ipsum'],
       },
     ],
   },

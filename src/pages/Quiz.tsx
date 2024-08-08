@@ -63,6 +63,16 @@ const Quiz = () => {
             </>
           )}
         </div>
+
+        <p className="absolute bottom-20 left-8 w-full text-xs flex flex-wrap">
+          {questions[currentQuestionIndex]?.refs &&
+            questions[currentQuestionIndex].refs.map((ref, index) => (
+              <a key={index} href={ref} target="_blank" rel="noreferrer" className="inline-block mr-2">
+                {' '}
+                {ref}
+              </a>
+            ))}
+        </p>
         <Footer />
       </div>
 

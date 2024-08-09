@@ -1,10 +1,9 @@
 import clsx from 'clsx';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { Footer } from '../components/Footer';
 import { Popup } from '../components/popup/Popup';
 import { Form } from '../components/popup/Form';
-import { HomeButton } from '../components/buttons/HomeButton';
 import { MountainButton } from '../components/buttons/MountainButton';
 import { usePopupStore } from '../stores/popupStore';
 import { useQuizStore } from '../stores/quizStore';
@@ -16,12 +15,13 @@ import { mountainStyles } from '../utils/variables';
 import backgroundMenu from '../assets/images/fond_menu.jpg';
 import logo from '../assets/images/logo.svg';
 import mailIcon from '../assets/images/icon_mail_off.svg';
+import homeIcon from '../assets/images/icon_home_off.svg';
 
 const Menu = () => {
   const navigate = useNavigate();
   const { isPopupOpen, openPopup } = usePopupStore();
   const { setQuizIndex, setQuizTitle, setQuizCategory } = useQuizStore();
-  const { completedMountains } = useUserProgressStore();
+  const { completedMountains, resetProgress } = useUserProgressStore();
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '4:3'>('4:3');
 
   useEffect(() => {
@@ -34,6 +34,10 @@ const Menu = () => {
     window.addEventListener('resize', updateAspectRatio);
     return () => window.removeEventListener('resize', updateAspectRatio);
   }, []);
+
+  const handleHomeClick = () => {
+    resetProgress();
+  };
 
   const handleMailIconClick = () => {
     openPopup('form', <Form />);
@@ -78,7 +82,9 @@ const Menu = () => {
             onClick={handleMailIconClick}
           />
 
-          <HomeButton />
+          <Link to={Routes.Home} onClick={handleHomeClick}>
+            <img src={homeIcon} alt="Accueil" width={26} height={26} />
+          </Link>
         </div>
 
         {data.map((item, index) => (

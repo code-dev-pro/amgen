@@ -8,7 +8,14 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'favicon.ico'],
+      includeAssets: ['**/*'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html}'],
+      },
+      devOptions: {
+        enabled: true,
+        type: 'module',
+      },
       manifest: {
         name: "Explor'Amgen",
         short_name: 'AMGEN',
@@ -22,13 +29,11 @@ export default defineConfig({
             type: 'image/svg+xml',
           },
         ],
+        lang: 'fr',
+        scope: '/amgen/',
+        start_url: '/amgen/',
       },
     }),
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './test/setup.ts',
-  },
   base: '/amgen',
 });

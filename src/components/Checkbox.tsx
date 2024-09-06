@@ -1,8 +1,9 @@
+import React from 'react';
 import clsx from 'clsx';
 
 interface CustomCheckboxProps {
-  id: string;
-  label: string;
+  id: number; // Uniquement number
+  label: string | React.ReactNode;
   checked: boolean;
   onChange: (isChecked: boolean) => void;
   size?: 'sm' | 'md' | 'lg';
@@ -16,7 +17,7 @@ interface CustomCheckboxProps {
   disabled?: boolean;
 }
 
-export const CustomCheckbox = ({
+export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
   id,
   label,
   checked,
@@ -30,18 +31,20 @@ export const CustomCheckbox = ({
   isCorrectAnswerSelected = false,
   isIncorrectAnswerSelected = false,
   disabled = false,
-}: CustomCheckboxProps) => {
+}) => {
+  const checkboxId = `checkbox-${id}`;
+
   return (
     <div className="flex items-center">
       <input
         type="checkbox"
-        id={id}
+        id={checkboxId}
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         className="hidden"
         disabled={disabled}
       />
-      <label htmlFor={id} className="flex items-center cursor-pointer">
+      <label htmlFor={checkboxId} className="flex items-center cursor-pointer">
         <div
           className={clsx(
             'flex items-center justify-center',
@@ -82,18 +85,19 @@ export const CustomCheckbox = ({
             ></div>
           )}
         </div>
-
-        <span
-          className={clsx('ml-2', {
-            [fontSize]: fontSize,
-            'text-white': !isAnswerShown && labelColor === 'white',
-            'text-black': !isAnswerShown && labelColor === 'black',
-            'text-accent-green': (isAnswerShown && isCorrectAnswerSelected) || (isAnswerShown && isCorrectAnswer),
-            'text-accent-red': isAnswerShown && isIncorrectAnswerSelected,
-          })}
-        >
-          {label}
-        </span>
+        {label && (
+          <span
+            className={clsx('ml-2', {
+              [fontSize]: fontSize,
+              'text-white': !isAnswerShown && labelColor === 'white',
+              'text-black': !isAnswerShown && labelColor === 'black',
+              'text-accent-green': (isAnswerShown && isCorrectAnswerSelected) || (isAnswerShown && isCorrectAnswer),
+              'text-accent-red': isAnswerShown && isIncorrectAnswerSelected,
+            })}
+          >
+            {label}
+          </span>
+        )}
       </label>
     </div>
   );

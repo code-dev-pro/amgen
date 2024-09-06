@@ -11,9 +11,9 @@ interface QuizCompletionProps {
 }
 
 export const QuizCompletion = ({ setCompletionContentPopup, mountainName, onStopClick }: QuizCompletionProps) => {
-  const { openPopup } = usePopupStore();
-  const markMountainAsCompleted = useUserProgressStore((state) => state.markMountainAsCompleted);
   const navigate = useNavigate();
+  const { openPopup } = usePopupStore();
+  const { markMountainAsCompleted } = useUserProgressStore();
 
   const handleClick = () => {
     markMountainAsCompleted(mountainName);

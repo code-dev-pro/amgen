@@ -1,13 +1,9 @@
 import clsx from 'clsx';
-import DOMPurify from 'dompurify';
-import { adjustPosition } from '../../utils/helpers';
+import { adjustPosition, sanitize } from '../../utils/helpers';
 
 interface MountainButtonProps {
-  item: {
-    title: string;
-    titleHTML: string;
-  };
   index: number;
+  label: string;
   mountainStyles: {
     top: string;
     left: string;
@@ -19,13 +15,12 @@ interface MountainButtonProps {
 
 export const MountainButton = ({
   index,
-  item,
+  label,
   mountainStyles,
   disabled,
   onClick,
   aspectRatio,
 }: MountainButtonProps) => {
-  const sanitizeHtml = (html: string) => ({ __html: DOMPurify.sanitize(html) });
   const adjustedStyles = {
     top: adjustPosition(mountainStyles.top, aspectRatio, false),
     left: adjustPosition(mountainStyles.left, aspectRatio, true),
@@ -43,8 +38,8 @@ export const MountainButton = ({
         }
       )}
       style={adjustedStyles}
-      dangerouslySetInnerHTML={sanitizeHtml(
-        `<span class="text-white font-almaq text-lg uppercase">Mont</span> <br />${item.titleHTML}`
+      dangerouslySetInnerHTML={sanitize(
+        `<span class="text-white font-almaq text-lg uppercase">Mont</span> <br />${label}`
       )}
       disabled={disabled}
       onClick={onClick}

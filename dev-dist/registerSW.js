@@ -1,1 +1,0 @@
-if('serviceWorker' in navigator) navigator.serviceWorker.register('/amgen/dev-sw.js?dev-sw', { scope: '/amgen/', type: 'classic' })

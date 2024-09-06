@@ -1,18 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { data } from '../data';
-
-interface Question {
-  question: string;
-  options: string[];
-  correctAnswer: string[];
-  learnMore: {
-    text: string;
-    imageURL: string;
-    imageAlt: string;
-  };
-  refs: string[];
-}
+import type { Proposition, Question } from '../types';
 
 interface QuizState {
   quizIndex: number;
@@ -20,14 +8,14 @@ interface QuizState {
   quizCategory: string;
   questions: Question[];
   currentQuestionIndex: number;
-  selectedAnswers: string[];
+  selectedAnswers: Proposition[];
   isAnswerShown: boolean;
   isQuizCompleted: boolean;
   setQuizIndex: (quizIndex: number) => void;
   setQuizTitle: (title: string) => void;
   setQuizCategory: (category: string) => void;
-  loadQuestions: () => void;
-  selectAnswer: (answer: string, isChecked: boolean) => void;
+  setQuizQuestions: (questions: Question[]) => void;
+  selectAnswer: (answer: Proposition, isChecked: boolean) => void;
   showAnswer: () => void;
   nextQuestion: () => void;
   completeQuiz: () => void;
@@ -36,7 +24,7 @@ interface QuizState {
 
 export const useQuizStore = create<QuizState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       quizIndex: 0,
       quizTitle: '',
       quizCategory: '',
@@ -49,23 +37,13 @@ export const useQuizStore = create<QuizState>()(
       setQuizIndex: (quizIndex) => set({ quizIndex }),
       setQuizTitle: (title) => set({ quizTitle: title }),
       setQuizCategory: (category) => set({ quizCategory: category }),
-
-      loadQuestions: () => {
-        const { quizTitle } = get();
-        const categoryData = data.find((item) => item.title === quizTitle);
-        if (categoryData && categoryData.quiz) {
-          const shuffledQuestions = categoryData.quiz.sort(() => 0.5 - Math.random()).slice(0, 10);
-          set({ questions: shuffledQuestions });
-        } else {
-          set({ questions: [] });
-        }
-      },
+      setQuizQuestions: (questions) => set({ questions }),
 
       selectAnswer: (answer, isChecked) =>
         set((state) => ({
           selectedAnswers: isChecked
             ? [...state.selectedAnswers, answer]
-            : state.selectedAnswers.filter((a) => a !== answer),
+            : state.selectedAnswers.filter((a) => a.id !== answer.id),
         })),
 
       showAnswer: () => set({ isAnswerShown: true }),
@@ -94,6 +72,7 @@ export const useQuizStore = create<QuizState>()(
         quizIndex: state.quizIndex,
         quizTitle: state.quizTitle,
         quizCategory: state.quizCategory,
+        questions: state.questions,
       }),
     }
   )

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuizStore } from '../stores/quizStore';
 import { usePopupStore } from '../stores/popupStore';
@@ -17,19 +17,14 @@ import { PlainText } from '../components/popup/PlainText';
 import { ZoomableImage } from '../components/popup/ZoomableImage';
 import { Modal } from '../components/Modal';
 import { Routes } from '../utils/routes';
+import { sanitize } from '../utils/helpers';
 
 const Quiz = () => {
-  const { quizTitle, questions, currentQuestionIndex, isQuizCompleted, loadQuestions, completeQuiz, resetQuiz } =
-    useQuizStore();
-  const resetProgress = useUserProgressStore((state) => state.resetProgress);
+  const { quizTitle, questions, currentQuestionIndex, isQuizCompleted, completeQuiz } = useQuizStore();
+  const { resetProgress } = useUserProgressStore();
   const { isPopupOpen, openPopup } = usePopupStore();
   const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    resetQuiz();
-    loadQuestions();
-  }, [loadQuestions, resetQuiz]);
 
   const handleTimerComplete = () => {
     completeQuiz();
@@ -37,13 +32,18 @@ const Quiz = () => {
 
   const handleLearnMoreClick = () => {
     const currentQuestion = questions[currentQuestionIndex];
-    const content =
-      currentQuestion.learnMore.text !== '' ? (
-        <PlainText text={currentQuestion.learnMore.text} />
-      ) : (
-        <ZoomableImage imageUrl={currentQuestion.learnMore.imageURL} imageAlt={currentQuestion.learnMore.imageAlt} />
-      );
-    openPopup('learnMore', content);
+    if (!currentQuestion) return;
+
+    const hasValidText = currentQuestion.feedbackText && currentQuestion.feedbackText.trim() !== '';
+    const hasValidImage = currentQuestion.feedbackImage && currentQuestion.feedbackImage.trim() !== '';
+
+    const content = hasValidText ? (
+      <PlainText text={currentQuestion.feedbackText ?? ''} />
+    ) : hasValidImage ? (
+      <ZoomableImage imageUrl={currentQuestion.feedbackImage} imageAlt="image de feedback" />
+    ) : null;
+
+    if (content) openPopup('learnMore', content);
   };
 
   const handleCompletionContentClick = () => {
@@ -89,15 +89,11 @@ const Quiz = () => {
           )}
         </div>
 
-        <p className="absolute bottom-20 left-8 w-full text-xs flex flex-wrap">
-          {questions[currentQuestionIndex]?.refs &&
-            questions[currentQuestionIndex].refs.map((ref, index) => (
-              <a key={index} href={ref} target="_blank" rel="noreferrer" className="inline-block mr-2">
-                {' '}
-                {ref}
-              </a>
-            ))}
-        </p>
+        <p
+          className="absolute bottom-20 left-8 text-xs text-white"
+          dangerouslySetInnerHTML={sanitize(questions[currentQuestionIndex].references)}
+        />
+
         <Footer />
       </div>
 

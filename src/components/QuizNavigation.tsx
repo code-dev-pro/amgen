@@ -3,13 +3,16 @@ import { LearnMoreButton } from './buttons/LearnMoreButton';
 import { useQuizStore } from '../stores/quizStore';
 import { useQuizNavigation } from '../hooks/useQuizNavigation';
 
-interface QuizNavigationProps {
+interface quizNavigationProps {
   onLearnMoreClick: () => void;
 }
 
-export const QuizNavigation = ({ onLearnMoreClick }: QuizNavigationProps) => {
-  const { isAnswerShown, selectedAnswers } = useQuizStore();
+export const QuizNavigation = ({ onLearnMoreClick }: quizNavigationProps) => {
+  const { isAnswerShown, selectedAnswers, questions, currentQuestionIndex } = useQuizStore();
   const { handleValidateClick, handleNextClick } = useQuizNavigation();
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const hasFeedback = currentQuestion.feedbackText || currentQuestion.feedbackImage;
 
   const isValidateButtonDisabled = selectedAnswers.length === 0;
 
@@ -17,7 +20,7 @@ export const QuizNavigation = ({ onLearnMoreClick }: QuizNavigationProps) => {
     <div className="text-center mt-2">
       {isAnswerShown ? (
         <>
-          <LearnMoreButton handleLearnMoreClick={onLearnMoreClick} />
+          {hasFeedback && <LearnMoreButton handleLearnMoreClick={onLearnMoreClick} />}
           <div className="mt-2">
             <ValidateButton text="Suivant" fontSize="text-4xl" onClick={handleNextClick} />
           </div>

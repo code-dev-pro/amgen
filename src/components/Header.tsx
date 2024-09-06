@@ -6,7 +6,8 @@ import leftMountain from '../assets/images/montagne_autres.png';
 import rightMountain from '../assets/images/montagne-seule.png';
 
 export const Header = ({ onClick }: { onClick: () => void }) => {
-  const { quizTitle, quizCategory } = useQuizStore();
+  const { quizCategory, questions, currentQuestionIndex } = useQuizStore();
+  const currentQuestion = questions[currentQuestionIndex];
 
   return (
     <header className="w-full px-8 py-4" data-testid="header">
@@ -16,9 +17,9 @@ export const Header = ({ onClick }: { onClick: () => void }) => {
 
       <div className="text-white text-center uppercase">
         <p className="font-almaq text-3xl">Mont</p>
-        <p className="font-white-on-black text-accent-blue text-4xl">{quizTitle}</p>
+        <p className="font-white-on-black text-accent-blue text-4xl">{quizCategory}</p>
 
-        {quizCategory !== '' && <p className="font-light">{quizCategory}</p>}
+        {currentQuestion.soustitre !== null && <p className="font-light">{currentQuestion.soustitre}</p>}
       </div>
 
       <HomeButton className="absolute top-8 right-8 z-10" onClick={onClick} />

@@ -1,15 +1,37 @@
+import DOMPurify from 'dompurify';
 import { STORAGE_KEYS } from './variables';
+import type { Proposition, Question } from '../types';
+
+/**************************************************************************
+random helpers
+******************************************************************************/
+export const sanitize = (html: string) => {
+  return {
+    __html: DOMPurify.sanitize(html),
+  };
+};
+
+export const shuffleArray = <T>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 /**************************************************************************
   Quiz answers
 ******************************************************************************/
 
-interface QuizAnswer {
+export interface QuizAnswer {
+  question: string;
+  selectedAnswers: Proposition[];
+}
+
+export interface QuizResult {
   quizTitle: string;
-  answers: {
-    question: string;
-    selectedAnswers: string[];
-  }[];
+  answers: QuizAnswer[];
 }
 
 // Initialize quiz answers from local storage
@@ -21,15 +43,18 @@ export const initializeQuizAnswers = (): QuizAnswer[] => {
   return [];
 };
 
-// Save quiz answers to local storage
-export const saveQuizAnswer = (quizTitle: string, answer: { question: string; selectedAnswers: string[] }) => {
-  if (answer.selectedAnswers.length === 0) return;
+export const saveQuizAnswer = (quizTitle: string, currentQuestion: Question, selectedAnswers: Proposition[]) => {
+  const quizAnswers: QuizResult[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.QUIZ_ANSWERS) || '[]');
 
-  const quizAnswers = initializeQuizAnswers();
-  const existingAnswerIndex = quizAnswers.findIndex((resp) => resp.quizTitle === quizTitle);
+  const answer: QuizAnswer = {
+    question: currentQuestion.libelle,
+    selectedAnswers: selectedAnswers,
+  };
 
-  if (existingAnswerIndex !== -1) {
-    quizAnswers[existingAnswerIndex].answers.push(answer);
+  const existingQuizIndex = quizAnswers.findIndex((quiz) => quiz.quizTitle === quizTitle);
+
+  if (existingQuizIndex !== -1) {
+    quizAnswers[existingQuizIndex].answers.push(answer);
   } else {
     quizAnswers.push({
       quizTitle,

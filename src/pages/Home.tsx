@@ -1,15 +1,83 @@
-import { Footer } from '../components/Footer';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { ExploreButton } from '../components/buttons/ExploreButton';
+import { Footer } from '../components/Footer';
 import { useIdleTimer } from '../hooks/useIdleTimer';
+import { useQuizDataStore } from '../stores/dataStore';
+import { useQuizStore } from '../stores/quizStore';
+import { Routes } from '../utils/routes';
+import type { Themes } from '../types';
 
 import backgroundImage from '../assets/images/fond_accueil.jpg';
 import logo from '../assets/images/logo.svg';
 
 const Home = () => {
   const { resetTimer } = useIdleTimer();
+  const navigate = useNavigate();
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const { quizData, setQuizData, isDataLoaded } = useQuizDataStore();
+  const { resetQuiz } = useQuizStore();
+
+  const fetchData = async (): Promise<Themes> => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/amgen/getConteneur`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.json();
+  };
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['quizData'],
+    queryFn: fetchData,
+    enabled: !isDataLoaded && navigator.onLine,
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (data) {
+      const shouldUpdate = !quizData || quizData.version !== data.version;
+      if (shouldUpdate) setQuizData(data);
+    }
+  }, [data, quizData, setQuizData]);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const handleExploreButtonClick = () => {
     resetTimer();
+    resetQuiz();
+    navigate(Routes.Menu);
+  };
+
+  const renderExploreButton = () => {
+    if (isLoading) {
+      return <p>Chargement des données...</p>;
+    }
+
+    if (!isOnline && !isDataLoaded) {
+      return <p>Merci de vous connecter à Internet pour accéder au quiz.</p>;
+    }
+
+    if (error) {
+      return <p>Une erreur est survenue. Veuillez réessayer.</p>;
+    }
+
+    return <ExploreButton onClick={handleExploreButtonClick} />;
   };
 
   return (
@@ -23,9 +91,7 @@ const Home = () => {
       <div className="absolute top-12 right-12">
         <img src={logo} alt="Logo" width={546} height={213} data-testid="logo" />
       </div>
-      <div className="absolute bottom-[291px] right-[86px]">
-        <ExploreButton onClick={handleExploreButtonClick} />
-      </div>
+      <div className="absolute bottom-[291px] right-[86px]">{renderExploreButton()}</div>
 
       <p className="absolute bottom-[90px] right-[20px] text-xs text-right">
         <span>AMGEN SAS,</span>

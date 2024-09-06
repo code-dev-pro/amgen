@@ -20,7 +20,9 @@ const Home = () => {
   const { resetQuiz } = useQuizStore();
 
   const fetchData = async (): Promise<Themes> => {
-    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/amgen/getConteneur`, {
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    const apiUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+    const response = await fetch(`${apiUrl}/api/amgen/getConteneur`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,

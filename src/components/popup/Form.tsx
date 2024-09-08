@@ -1,41 +1,8 @@
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { ValidateButton } from '../buttons/ValidateButton';
-import { STORAGE_KEYS } from '../../utils/variables';
-
-const schema = z.object({
-  contentPreference: z.string().min(1, { message: 'Ce champ est requis' }),
-  firstName: z.string().min(1, 'Ce champ est requis').max(50, 'Le prénom ne doit pas dépasser 50 caractères.'),
-  lastName: z.string().min(1, 'Ce champ est requis').max(50, 'Le nom ne doit pas dépasser 50 caractères.'),
-  postalCode: z.string().regex(/^[0-9]{5}$/, 'Le code postal doit être composé de 5 chiffres.'),
-  job: z.string().min(1, 'Ce champ est requis').max(100, 'Le champ "Profession" ne doit pas dépasser 100 caractères.'),
-  email: z.string().email('Veuillez saisir une adresse e-mail valide.'),
-  rpps: z.string().regex(/^[0-9]{11}$/, 'Le RPPS doit être composé de 11 chiffres.'),
-  address: z.string().min(1, 'Ce champ est requis').max(200, "L'adresse ne doit pas dépasser 200 caractères."),
-  city: z.string().min(1, 'Ce champ est requis').max(100, 'La ville ne doit pas dépasser 100 caractères.'),
-  phone: z.string().regex(/^[0-9]{10}$/, 'Le numéro de téléphone doit être composé de 10 chiffres.'),
-});
-
-type FormData = z.infer<typeof schema>;
+import { useFormLogic } from '../../hooks/useFormLogic';
 
 export const Form = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
-
-  const onSubmit = (data: FormData) => {
-    const storedData = localStorage.getItem(STORAGE_KEYS.FORM_DATA);
-    const formDataList = storedData ? JSON.parse(storedData) : [];
-    formDataList.push(data);
-    localStorage.setItem('formDataList', JSON.stringify(formDataList));
-    reset();
-  };
+  const { register, handleSubmit, errors, onSubmit } = useFormLogic();
 
   return (
     <form className="text-base text-black px-6 pt-4" onSubmit={handleSubmit(onSubmit)}>

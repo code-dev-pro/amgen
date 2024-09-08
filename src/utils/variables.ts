@@ -1,6 +1,7 @@
 import type { Theme } from '../types';
 
 export const SURPRISE_EXPLORATION = 'Exploration surprise';
+export const CORRECT_PIN = '1234'; // The correct PIN for the CSV download feature
 export const IDLE_TIMEOUT = 300000; // 5 minutes in milliseconds
 export const MAX_QUESTIONS = 10; // Maximum number of questions in a quiz
 
@@ -13,7 +14,7 @@ export const surpriseExplorerTheme: Theme = {
 
 export const STORAGE_KEYS = {
   FORM_DATA: 'form-data-list',
-  QUIZ_ANSWERS: 'quiz-answers',
+  QUIZ_ANSWERS: 'offline-quiz-answers',
 };
 
 // Checkpoints on the mountain path for the progress tracker animation
@@ -50,9 +51,9 @@ export const colorMapping = [
 // Styles for mountain buttons on the menu page
 export const mountainStyles = [
   { top: '37%', left: '12%' },
-  { top: '50%', left: '24%' },
-  { top: '40%', left: '38%' },
+  { top: '50%', left: '26%' },
+  { top: '40%', left: '41%' },
   { top: '30%', left: '58%' },
-  { top: '45%', left: '75%' },
-  { top: '37%', left: '90%' },
+  { top: '45%', left: '72%' },
+  { top: '37%', left: '85%' },
 ];

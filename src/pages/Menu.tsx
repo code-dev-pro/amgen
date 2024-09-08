@@ -12,10 +12,10 @@ import { useUserProgressStore } from '../stores/userProgressStore';
 import { Routes } from '../utils/routes';
 import { mountainStyles, SURPRISE_EXPLORATION, surpriseExplorerTheme } from '../utils/variables';
 
-import backgroundMenu from '../assets/images/fond_menu.jpg';
-import logo from '../assets/images/logo.svg';
-import mailIcon from '../assets/images/icon_mail_off.svg';
-import homeIcon from '../assets/images/icon_home_off.svg';
+import backgroundMenu from '/images/fond_menu.jpg';
+import logo from '/images/logo.svg';
+import mailIcon from '/images/icon_mail_off.svg';
+import homeIcon from '/images/icon_home_off.svg';
 
 const Menu = () => {
   const { isPopupOpen, openPopup } = usePopupStore();
@@ -67,9 +67,8 @@ const Menu = () => {
   }, [quizData?.themes, completedMountains, handleMountainClick, aspectRatio]);
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-dvh">
       <div
-        data-testid="mountain-background"
         className={clsx('absolute inset-0 bg-cover bg-center', { 'blur-sm': isPopupOpen })}
         style={{
           backgroundImage: `url(${backgroundMenu})`,

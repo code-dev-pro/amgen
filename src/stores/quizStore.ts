@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Proposition, Question } from '../types';
+import type { Proposition, Question, QuizAnswer } from '../types';
 
 interface QuizState {
   quizIndex: number;
@@ -11,6 +11,7 @@ interface QuizState {
   selectedAnswers: Proposition[];
   isAnswerShown: boolean;
   isQuizCompleted: boolean;
+  quizAnswers: QuizAnswer[];
   setQuizIndex: (quizIndex: number) => void;
   setQuizTitle: (title: string) => void;
   setQuizCategory: (category: string) => void;
@@ -20,6 +21,8 @@ interface QuizState {
   nextQuestion: () => void;
   completeQuiz: () => void;
   resetQuiz: () => void;
+  addQuizAnswer: (answer: QuizAnswer) => void;
+  clearQuizAnswers: () => void;
 }
 
 export const useQuizStore = create<QuizState>()(
@@ -33,6 +36,7 @@ export const useQuizStore = create<QuizState>()(
       selectedAnswers: [],
       isAnswerShown: false,
       isQuizCompleted: false,
+      quizAnswers: [],
 
       setQuizIndex: (quizIndex) => set({ quizIndex }),
       setQuizTitle: (title) => set({ quizTitle: title }),
@@ -64,8 +68,17 @@ export const useQuizStore = create<QuizState>()(
           selectedAnswers: [],
           isAnswerShown: false,
           isQuizCompleted: false,
+          quizAnswers: [],
         }),
+
+      addQuizAnswer: (answer) =>
+        set((state) => ({
+          quizAnswers: [...state.quizAnswers, answer],
+        })),
+
+      clearQuizAnswers: () => set({ quizAnswers: [] }),
     }),
+
     {
       name: 'quiz-store',
       partialize: (state) => ({
@@ -73,6 +86,7 @@ export const useQuizStore = create<QuizState>()(
         quizTitle: state.quizTitle,
         quizCategory: state.quizCategory,
         questions: state.questions,
+        quizAnswers: state.quizAnswers,
       }),
     }
   )

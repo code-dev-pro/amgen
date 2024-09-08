@@ -8,8 +8,8 @@ interface quizNavigationProps {
 }
 
 export const QuizNavigation = ({ onLearnMoreClick }: quizNavigationProps) => {
-  const { isAnswerShown, selectedAnswers, questions, currentQuestionIndex } = useQuizStore();
-  const { handleValidateClick, handleNextClick } = useQuizNavigation();
+  const { isAnswerShown, selectedAnswers, questions, currentQuestionIndex, showAnswer } = useQuizStore();
+  const { handleNextClick } = useQuizNavigation();
 
   const currentQuestion = questions[currentQuestionIndex];
   const hasFeedback = currentQuestion.feedbackText || currentQuestion.feedbackImage;
@@ -26,12 +26,7 @@ export const QuizNavigation = ({ onLearnMoreClick }: quizNavigationProps) => {
           </div>
         </>
       ) : (
-        <ValidateButton
-          text="Valider"
-          fontSize="text-4xl"
-          onClick={handleValidateClick}
-          isDisabled={isValidateButtonDisabled}
-        />
+        <ValidateButton text="Valider" fontSize="text-4xl" onClick={showAnswer} isDisabled={isValidateButtonDisabled} />
       )}
     </div>
   );

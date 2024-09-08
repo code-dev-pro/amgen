@@ -1,9 +1,9 @@
-import React from 'react';
 import clsx from 'clsx';
+import { sanitize } from '../utils/helpers';
 
 interface CustomCheckboxProps {
-  id: number; // Uniquement number
-  label: string | React.ReactNode;
+  id: number;
+  label: string;
   checked: boolean;
   onChange: (isChecked: boolean) => void;
   size?: 'sm' | 'md' | 'lg';
@@ -17,7 +17,7 @@ interface CustomCheckboxProps {
   disabled?: boolean;
 }
 
-export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
+export const CustomCheckbox = ({
   id,
   label,
   checked,
@@ -31,11 +31,11 @@ export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
   isCorrectAnswerSelected = false,
   isIncorrectAnswerSelected = false,
   disabled = false,
-}) => {
+}: CustomCheckboxProps) => {
   const checkboxId = `checkbox-${id}`;
 
   return (
-    <div className="flex items-center">
+    <>
       <input
         type="checkbox"
         id={checkboxId}
@@ -47,7 +47,7 @@ export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
       <label htmlFor={checkboxId} className="flex items-center cursor-pointer">
         <div
           className={clsx(
-            'flex items-center justify-center',
+            'flex items-center justify-center flex-shrink-0',
             {
               'w-4 h-4 border-2': size === 'sm',
               'w-6 h-6 border-2': size === 'md',
@@ -87,18 +87,17 @@ export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
         </div>
         {label && (
           <span
-            className={clsx('ml-2', {
+            className={clsx('ml-2 self-start', {
               [fontSize]: fontSize,
               'text-white': !isAnswerShown && labelColor === 'white',
               'text-black': !isAnswerShown && labelColor === 'black',
               'text-accent-green': (isAnswerShown && isCorrectAnswerSelected) || (isAnswerShown && isCorrectAnswer),
               'text-accent-red': isAnswerShown && isIncorrectAnswerSelected,
             })}
-          >
-            {label}
-          </span>
+            dangerouslySetInnerHTML={sanitize(label)}
+          />
         )}
       </label>
-    </div>
+    </>
   );
 };

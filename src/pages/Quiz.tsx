@@ -18,17 +18,16 @@ import { ZoomableImage } from '../components/popup/ZoomableImage';
 import { Modal } from '../components/Modal';
 import { Routes } from '../utils/routes';
 import { sanitize } from '../utils/helpers';
+import { useQuizNavigation } from '../hooks/useQuizNavigation';
 
 const Quiz = () => {
-  const { quizTitle, questions, currentQuestionIndex, isQuizCompleted, completeQuiz } = useQuizStore();
+  const { quizTitle, questions, currentQuestionIndex, isQuizCompleted } = useQuizStore();
   const { resetProgress } = useUserProgressStore();
   const { isPopupOpen, openPopup } = usePopupStore();
   const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleTimerComplete = () => {
-    completeQuiz();
-  };
+  const { handleTimerComplete, isSubmitting } = useQuizNavigation();
 
   const handleLearnMoreClick = () => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -72,7 +71,7 @@ const Quiz = () => {
           <MountainPath numQuestions={questions.length} currentQuestionIndex={currentQuestionIndex} />
         </div>
         <div className="flex justify-center items-center px-8 mt-4">
-          <Timer onComplete={handleTimerComplete} isPaused={isPopupOpen} isFinished={isQuizCompleted} />
+          <Timer onComplete={handleTimerComplete} isPaused={isPopupOpen || isSubmitting} isFinished={isQuizCompleted} />
         </div>
         <div className="absolute top-[33%] left-0 w-full px-8">
           {isQuizCompleted ? (

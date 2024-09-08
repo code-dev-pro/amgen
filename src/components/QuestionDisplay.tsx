@@ -11,10 +11,10 @@ export const QuestionDisplay = () => {
       <p className="text-3xl font-bold" dangerouslySetInnerHTML={sanitize(currentQuestion?.libelle)} />
       <ul className="text-lg pl-8 mt-4 space-y-4">
         {currentQuestion?.propositions.map((proposition) => (
-          <li key={proposition.id} className="flex items-center space-x-2">
+          <li key={proposition.id} className="flex items-center">
             <CustomCheckbox
               id={proposition.id}
-              label={<span dangerouslySetInnerHTML={sanitize(proposition.libelle)} />}
+              label={proposition.libelle}
               checked={selectedAnswers.some((answer) => answer.id === proposition.id)}
               onChange={(isChecked) => selectAnswer(proposition, isChecked)}
               size="sm"

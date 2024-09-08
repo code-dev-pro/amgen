@@ -33,3 +33,14 @@ export interface Themes {
   description: string;
   themes: Theme[];
 }
+
+export interface QuizAnswer {
+  date: string;
+  time: string;
+  id: number;
+  version: number;
+  idTheme: number;
+  idQuestion: number;
+  success: boolean;
+  propositions: Array<{ id: number; isCheck: boolean }>;
+}

@@ -1,4 +1,4 @@
-import homeIcon from '../../assets/images/icon_home_off.svg';
+import homeIcon from '/images/icon_home_off.svg';
 
 interface HomeButtonProps {
   className?: string;

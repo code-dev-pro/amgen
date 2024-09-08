@@ -4,12 +4,12 @@
 
 @font-face {
   font-family: 'Almaq';
-  src: url('./assets/fonts/almaq-rough.ttf') format('truetype');
+  src: url('/fonts/almaq-rough.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'White on Black';
-  src: url('./assets/fonts/white-on-black.ttf') format('truetype');
+  src: url('/fonts/white-on-black.ttf') format('truetype');
 }
 
 body {

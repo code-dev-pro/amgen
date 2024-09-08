@@ -1,6 +1,5 @@
 import DOMPurify from 'dompurify';
-import { STORAGE_KEYS } from './variables';
-import type { Proposition, Question } from '../types';
+import type { Proposition, Question, QuizAnswer, Themes } from '../types';
 
 /**************************************************************************
 random helpers
@@ -21,48 +20,50 @@ export const shuffleArray = <T>(array: T[]): T[] => {
 };
 
 /**************************************************************************
-  Quiz answers
+  Fetch data
 ******************************************************************************/
 
-export interface QuizAnswer {
-  question: string;
-  selectedAnswers: Proposition[];
-}
-
-export interface QuizResult {
-  quizTitle: string;
-  answers: QuizAnswer[];
-}
-
-// Initialize quiz answers from local storage
-export const initializeQuizAnswers = (): QuizAnswer[] => {
-  const storedData = localStorage.getItem(STORAGE_KEYS.QUIZ_ANSWERS);
-  if (storedData) {
-    return JSON.parse(storedData);
-  }
-  return [];
+export const fetchData = async (): Promise<Themes> => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const apiUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const response = await fetch(`${apiUrl}/api/amgen/getConteneur`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
 };
 
-export const saveQuizAnswer = (quizTitle: string, currentQuestion: Question, selectedAnswers: Proposition[]) => {
-  const quizAnswers: QuizResult[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.QUIZ_ANSWERS) || '[]');
+/**************************************************************************
+  Submit answers
+******************************************************************************/
+export const transformQuizData = (
+  question: Question,
+  selectedAnswers: Proposition[],
+  quizData: Themes,
+  themeId: number
+): QuizAnswer => {
+  const correctPropositions = question.propositions.filter((prop) => prop.isGood === 1);
 
-  const answer: QuizAnswer = {
-    question: currentQuestion.libelle,
-    selectedAnswers: selectedAnswers,
+  const allGoodSelected =
+    selectedAnswers.length === correctPropositions.length &&
+    selectedAnswers.every((answer) => correctPropositions.some((prop) => prop.id === answer.id));
+
+  return {
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString(),
+    id: quizData.id,
+    version: parseFloat(quizData.version),
+    idTheme: themeId,
+    idQuestion: question.id,
+    success: allGoodSelected,
+    propositions: question.propositions.map((prop) => ({
+      id: prop.id,
+      isCheck: selectedAnswers.some((answer) => answer.id === prop.id),
+    })),
   };
-
-  const existingQuizIndex = quizAnswers.findIndex((quiz) => quiz.quizTitle === quizTitle);
-
-  if (existingQuizIndex !== -1) {
-    quizAnswers[existingQuizIndex].answers.push(answer);
-  } else {
-    quizAnswers.push({
-      quizTitle,
-      answers: [answer],
-    });
-  }
-
-  localStorage.setItem(STORAGE_KEYS.QUIZ_ANSWERS, JSON.stringify(quizAnswers));
 };
 
 /************************************************************************
@@ -132,22 +133,23 @@ export const calculateDelay = (index: number, currentQuestionIndex: number, chec
 /**************************************************************************
   Mountain button position adjustment
 ******************************************************************************/
-
-export const adjustPosition = (position: string, aspectRatio: '16:9' | '4:3', isHorizontal: boolean) => {
+export const adjustPosition = (position: string, aspectRatio: '16:9' | '4:3', isHorizontal: boolean): string => {
   if (aspectRatio === '4:3') return position;
 
   const numericPosition = parseFloat(position);
 
   if (isHorizontal) {
-    if (numericPosition < 40) {
-      return `calc(${position} + ${(50 - numericPosition) * 0.3}%)`;
-    } else if (numericPosition > 50 && numericPosition < 70) {
-      return `calc(${position} - ${(numericPosition - 50) * 0.15}%)`;
-    } else if (numericPosition > 70) {
-      return `calc(${position} - ${(numericPosition - 50) * 0.3}%)`;
+    if (numericPosition < 20) {
+      return `calc(${position} + 5%)`;
+    } else if (numericPosition < 40) {
+      return `calc(${position} + 2%)`;
+    } else if (numericPosition > 60) {
+      return `calc(${position} - 0.5%)`;
+    } else if (numericPosition > 80) {
+      return `calc(${position} + 2%)`;
     }
   } else {
-    return `calc(${position} - 1%)`;
+    return `calc(${position} - 2%)`;
   }
 
   return position;

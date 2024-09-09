@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFormStore, FormData } from '../stores/formStore';
+import { useQuizDataStore } from '../stores/dataStore';
 
 const schema = z.object({
   contentPreference: z.string().min(1, { message: 'Ce champ est requis' }),
@@ -27,9 +28,14 @@ export const useFormLogic = () => {
   });
 
   const addFormData = useFormStore((state) => state.addFormData);
+  const { quizData } = useQuizDataStore();
 
-  const onSubmit = (data: FormData) => {
-    addFormData(data);
+  const onSubmit = async (data: FormData) => {
+    if (quizData?.published === 1) {
+      addFormData(data);
+    } else {
+      console.log('Dev mode: form data not submitted or saved', data);
+    }
     reset();
   };
 

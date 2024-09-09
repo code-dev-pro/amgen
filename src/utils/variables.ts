@@ -15,6 +15,7 @@ export const surpriseExplorerTheme: Theme = {
 export const STORAGE_KEYS = {
   FORM_DATA: 'form-data-list',
   QUIZ_ANSWERS: 'offline-quiz-answers',
+  ENCRYPTED_KEY: 'encrypted-key',
 };
 
 // Checkpoints on the mountain path for the progress tracker animation

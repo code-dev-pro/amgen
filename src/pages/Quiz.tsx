@@ -65,7 +65,7 @@ const Quiz = () => {
 
   return (
     <>
-      <div className={clsx('relative min-h-screen w-screen z-0', { 'blur-sm': isPopupOpen })}>
+      <div className={clsx('relative min-h-dvh w-screen z-0', { 'blur-sm': isPopupOpen })}>
         <Header onClick={() => handleStopClick()} />
         <div className="absolute top-0 right-0">
           <MountainPath numQuestions={questions.length} currentQuestionIndex={currentQuestionIndex} />

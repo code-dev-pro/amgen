@@ -11,6 +11,12 @@ const Home = lazy(() => import('./pages/Home'));
 const Menu = lazy(() => import('./pages/Menu'));
 const Quiz = lazy(() => import('./pages/Quiz'));
 
+if ('serviceWorker' in navigator) {
+  import('./pages/Home');
+  import('./pages/Menu');
+  import('./pages/Quiz');
+}
+
 const router = createBrowserRouter(
   [
     {

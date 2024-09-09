@@ -47,6 +47,19 @@ const Home = () => {
     if (data) {
       const shouldUpdate = !quizData || quizData.version !== data.version;
       if (shouldUpdate) setQuizData(data);
+
+      const imageUrls = data.themes
+        .flatMap((theme) => theme.questions)
+        .map((question) => question.feedbackImage)
+        .filter(Boolean);
+
+      const cacheImages = async () => {
+        const cache = await caches.open('quiz-images');
+        await cache.addAll(imageUrls);
+        console.log('Images ajoutées au cache', imageUrls);
+      };
+
+      cacheImages();
     }
   }, [data, quizData, setQuizData]);
 

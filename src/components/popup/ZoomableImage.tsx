@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { TransformWrapper, TransformComponent, useControls } from 'react-zoom-pan-pinch';
 
 const Controls = () => {
@@ -50,13 +51,31 @@ const Controls = () => {
 };
 
 export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageAlt: string }) => {
+  const [cachedImageUrl, setCachedImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadImage = async () => {
+      const cache = await caches.open('quiz-images');
+      const cachedResponse = await cache.match(imageUrl);
+
+      if (cachedResponse) {
+        const blob = await cachedResponse.blob();
+        setCachedImageUrl(URL.createObjectURL(blob));
+      } else {
+        setCachedImageUrl(imageUrl);
+      }
+    };
+
+    loadImage();
+  }, [imageUrl]);
+
   return (
     <div className="flex justify-center items-center mt-4 w-full h-full max-w-[845px] max-h-[500px]">
       <TransformWrapper initialScale={1} minScale={1} maxScale={2}>
         <Controls />
         <TransformComponent>
           <div className="flex justify-center items-center w-full h-full">
-            <img src={imageUrl} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
+            <img src={cachedImageUrl || imageUrl} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
           </div>
         </TransformComponent>
       </TransformWrapper>

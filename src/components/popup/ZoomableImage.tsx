@@ -51,23 +51,34 @@ const Controls = () => {
 };
 
 export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageAlt: string }) => {
-  const [cachedImageUrl, setCachedImageUrl] = useState<string | null>(null);
+  const [cachedSrc, setCachedSrc] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    const loadImage = async () => {
-      const cache = await caches.open('quiz-images');
-      const cachedResponse = await cache.match(imageUrl);
-
-      if (cachedResponse) {
-        const blob = await cachedResponse.blob();
-        setCachedImageUrl(URL.createObjectURL(blob));
-      } else {
-        setCachedImageUrl(imageUrl);
+    const checkCacheAndLoadImage = async () => {
+      try {
+        const cache = await caches.open('quiz-images');
+        const cachedResponse = await cache.match(imageUrl);
+        if (cachedResponse) {
+          setCachedSrc(imageUrl);
+        } else {
+          setCachedSrc(null);
+        }
+      } catch (err) {
+        setError(true);
+        console.error(`Erreur lors de la vérification du cache pour ${imageUrl}`, err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    loadImage();
-  }, [imageUrl]);
+    checkCacheAndLoadImage();
+  }, [imageUrl, cachedSrc]);
+
+  if (loading) return <div>Chargement de l'image...</div>;
+  if (error) return <div>Impossible de charger l'image.</div>;
+  if (!cachedSrc) return <div>Image non disponible en cache.</div>;
 
   return (
     <div className="flex justify-center items-center mt-4 w-full h-full max-w-[845px] max-h-[500px]">
@@ -75,7 +86,7 @@ export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageA
         <Controls />
         <TransformComponent>
           <div className="flex justify-center items-center w-full h-full">
-            <img src={cachedImageUrl || imageUrl} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
+            <img src={cachedSrc} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
           </div>
         </TransformComponent>
       </TransformWrapper>

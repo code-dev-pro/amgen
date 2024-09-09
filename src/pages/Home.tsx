@@ -2,9 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { ExploreButton } from '../components/buttons/ExploreButton';
+import { LongPressButton } from '../components/buttons/LongPressButton';
+import { PinInput } from '../components/PinInput';
 import { Footer } from '../components/Footer';
 import { useIdleTimer } from '../hooks/useIdleTimer';
 import { useSubmitAnswers } from '../hooks/useSubmitAnswers';
+import { useCSVDownload } from '../hooks/useCSVDownload';
 import { useQuizDataStore } from '../stores/dataStore';
 import { useQuizStore } from '../stores/quizStore';
 import { Routes } from '../utils/routes';
@@ -13,9 +16,6 @@ import { STORAGE_KEYS } from '../utils/variables';
 
 import backgroundImage from '/images/fond_accueil.jpg';
 import logo from '/images/logo.svg';
-import { useCSVDownload } from '../hooks/useCSVDownload';
-import { LongPressButton } from '../components/buttons/LongPressButton';
-import { PinInput } from '../components/PinInput';
 
 const Home = () => {
   const { resetTimer } = useIdleTimer();
@@ -53,10 +53,30 @@ const Home = () => {
         .map((question) => question.feedbackImage)
         .filter(Boolean);
 
+      console.log('URLs des images', imageUrls);
+
       const cacheImages = async () => {
         const cache = await caches.open('quiz-images');
-        await cache.addAll(imageUrls);
-        console.log('Images ajoutées au cache', imageUrls);
+
+        for (const url of imageUrls) {
+          try {
+            let response = await cache.match(url);
+            if (response) {
+              console.log(`L'image ${url} est déjà en cache.`);
+            } else {
+              console.log(`L'image ${url} n'est pas en cache. Téléchargement...`);
+              response = await fetch(url, { mode: 'no-cors' });
+              if (response) {
+                await cache.put(url, response);
+                console.log(`Image mise en cache : ${url}`);
+              } else {
+                console.error(`Échec du chargement de l'image: ${url}`);
+              }
+            }
+          } catch (error) {
+            console.error(`Erreur lors de la gestion de l'image: ${url}`, error);
+          }
+        }
       };
 
       cacheImages();

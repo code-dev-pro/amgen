@@ -57,13 +57,15 @@ const Home = () => {
 
         for (const url of imageUrls) {
           try {
-            let response = await cache.match(url);
-            response = await fetch(url, { mode: 'no-cors' });
-            if (response) {
-              await cache.put(url, response);
+            const cachedResponse = await cache.match(url);
+            if (!cachedResponse) {
+              const response = await fetch(url);
+              if (response.ok) {
+                await cache.put(url, response.clone());
+              }
             }
           } catch (error) {
-            console.error(`Erreur lors de la gestion de l'image: ${url}`, error);
+            console.error(`Erreur lors de la mise en cache de l'image: ${url}`, error);
           }
         }
       };

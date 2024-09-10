@@ -7,6 +7,7 @@ export interface Proposition {
 export interface Question {
   id: number;
   libelle: string;
+  type: 'QCU' | 'QCM';
   soustitre: string;
   feedbackText: string | null;
   feedbackImage: string;

@@ -57,18 +57,25 @@ const Home = () => {
 
         for (const url of imageUrls) {
           try {
-            const cachedResponse = await cache.match(url);
-            if (!cachedResponse) {
-              const response = await fetch(url, { mode: 'no-cors' });
-              if (response.ok) {
-                await cache.put(url, response.clone());
+            let response = await cache.match(url);
+            if (response) {
+              console.log(`L'image ${url} est déjà en cache.`);
+            } else {
+              console.log(`L'image ${url} n'est pas en cache. Téléchargement...`);
+              response = await fetch(url, { mode: 'no-cors' });
+              if (response) {
+                await cache.put(url, response);
+                console.log(`Image mise en cache : ${url}`);
+              } else {
+                console.error(`Échec du chargement de l'image: ${url}`);
               }
             }
           } catch (error) {
-            console.error(`Erreur lors de la mise en cache de l'image: ${url}`, error);
+            console.error(`Erreur lors de la gestion de l'image: ${url}`, error);
           }
         }
       };
+
       cacheImages();
     }
   }, [data, quizData, setQuizData]);

@@ -1,4 +1,7 @@
+import { useQuizDataStore } from '../stores/dataStore';
+
 export const Footer = () => {
+  const { quizData } = useQuizDataStore();
   return (
     <div className="absolute bottom-0 left-0 w-full h-[63px]">
       <div className="absolute inset-0 bg-footer-dark-blue opacity-80"></div>
@@ -6,7 +9,7 @@ export const Footer = () => {
         <p className="text-xs">
           Ce document contient des informations sur des produits en cours de développement.
           <br />
-          SC-FR-CP-0053125 - Août 2024
+          SC-FR-CP-0053125 - Août 2024 - Version: {quizData?.version}
         </p>
         <svg className="w-[105px] mr-8" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 282.2 69.7">
           <g>

@@ -56,12 +56,31 @@ export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageA
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    // const checkCacheAndLoadImage = async () => {
+    //   try {
+    //     const cache = await caches.open('quiz-images');
+    //     const cachedResponse = await cache.match(imageUrl);
+    //     if (cachedResponse) {
+    //       setCachedSrc(imageUrl);
+    //     } else {
+    //       setCachedSrc(null);
+    //     }
+    //   } catch (err) {
+    //     setError(true);
+    //     console.error(`Erreur lors de la vérification du cache pour ${imageUrl}`, err);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+
     const checkCacheAndLoadImage = async () => {
       try {
         const cache = await caches.open('quiz-images');
         const cachedResponse = await cache.match(imageUrl);
         if (cachedResponse) {
-          setCachedSrc(imageUrl);
+          const blob = await cachedResponse.blob();
+          const objectURL = URL.createObjectURL(blob);
+          setCachedSrc(objectURL);
         } else {
           setCachedSrc(null);
         }

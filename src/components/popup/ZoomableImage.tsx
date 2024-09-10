@@ -51,28 +51,11 @@ const Controls = () => {
 };
 
 export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageAlt: string }) => {
-  const [cachedSrc, setCachedSrc] = useState<string | null>(null);
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // const checkCacheAndLoadImage = async () => {
-    //   try {
-    //     const cache = await caches.open('quiz-images');
-    //     const cachedResponse = await cache.match(imageUrl);
-    //     if (cachedResponse) {
-    //       setCachedSrc(imageUrl);
-    //     } else {
-    //       setCachedSrc(null);
-    //     }
-    //   } catch (err) {
-    //     setError(true);
-    //     console.error(`Erreur lors de la vérification du cache pour ${imageUrl}`, err);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
     const checkCacheAndLoadImage = async () => {
       try {
         const cache = await caches.open('quiz-images');
@@ -80,9 +63,9 @@ export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageA
         if (cachedResponse) {
           const blob = await cachedResponse.blob();
           const objectURL = URL.createObjectURL(blob);
-          setCachedSrc(objectURL);
+          setBlobUrl(objectURL);
         } else {
-          setCachedSrc(null);
+          setBlobUrl(null);
         }
       } catch (err) {
         setError(true);
@@ -93,11 +76,17 @@ export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageA
     };
 
     checkCacheAndLoadImage();
-  }, [imageUrl, cachedSrc]);
+
+    return () => {
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
+    };
+  }, [imageUrl, blobUrl]);
 
   if (loading) return <div>Chargement de l'image...</div>;
   if (error) return <div>Impossible de charger l'image.</div>;
-  if (!cachedSrc) return <div>Image non disponible en cache.</div>;
+  if (!blobUrl) return <div>Image non disponible en cache.</div>;
 
   return (
     <div className="flex justify-center items-center mt-4 w-full h-full max-w-[845px] max-h-[500px]">
@@ -105,7 +94,7 @@ export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageA
         <Controls />
         <TransformComponent>
           <div className="flex justify-center items-center w-full h-full">
-            <img src={cachedSrc} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
+            <img src={blobUrl} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
           </div>
         </TransformComponent>
       </TransformWrapper>

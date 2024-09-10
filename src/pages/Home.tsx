@@ -74,9 +74,9 @@ const Home = () => {
           try {
             const cachedResponse = await cache.match(url);
             if (!cachedResponse) {
-              const response = await fetch(url);
-              if (response.ok) {
-                await cache.put(url, response);
+              const response = await fetch(url, { mode: 'no-cors' });
+              if (response) {
+                await cache.put(url, response.clone());
               }
             }
           } catch (error) {

@@ -29,8 +29,8 @@ const Home = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ['quizData'],
     queryFn: fetchData,
-    enabled: !isDataLoaded && navigator.onLine,
-    staleTime: Infinity,
+    enabled: navigator.onLine,
+    staleTime: 1000 * 60 * 5,
     gcTime: Infinity,
   });
 
@@ -44,16 +44,13 @@ const Home = () => {
   }, [submitAnswers]);
 
   useEffect(() => {
-    if (data) {
-      const shouldUpdate = !quizData || quizData.version !== data.version;
-      if (shouldUpdate) setQuizData(data);
+    if (data && (!quizData || quizData.version !== data.version)) {
+      setQuizData(data);
 
       const imageUrls = data.themes
         .flatMap((theme) => theme.questions)
         .map((question) => question.feedbackImage)
         .filter(Boolean);
-
-      console.log('URLs des images', imageUrls);
 
       const cacheImages = async () => {
         const cache = await caches.open('quiz-images');

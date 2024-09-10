@@ -52,32 +52,15 @@ const Home = () => {
         .map((question) => question.feedbackImage)
         .filter(Boolean);
 
-      // const cacheImages = async () => {
-      //   const cache = await caches.open('quiz-images');
-
-      //   for (const url of imageUrls) {
-      //     try {
-      //       let response = await cache.match(url);
-      //       response = await fetch(url, { mode: 'no-cors' });
-      //       if (response) {
-      //         await cache.put(url, response);
-      //       }
-      //     } catch (error) {
-      //       console.error(`Erreur lors de la gestion de l'image: ${url}`, error);
-      //     }
-      //   }
-      // };
       const cacheImages = async () => {
         const cache = await caches.open('quiz-images');
 
         for (const url of imageUrls) {
           try {
-            const cachedResponse = await cache.match(url);
-            if (!cachedResponse) {
-              const response = await fetch(url, { mode: 'no-cors' });
-              if (response) {
-                await cache.put(url, response.clone());
-              }
+            let response = await cache.match(url);
+            response = await fetch(url, { mode: 'no-cors' });
+            if (response) {
+              await cache.put(url, response);
             }
           } catch (error) {
             console.error(`Erreur lors de la gestion de l'image: ${url}`, error);

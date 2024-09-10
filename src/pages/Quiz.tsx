@@ -70,10 +70,10 @@ const Quiz = () => {
         <div className="absolute top-0 right-0">
           <MountainPath numQuestions={questions.length} currentQuestionIndex={currentQuestionIndex} />
         </div>
-        <div className="flex justify-center items-center px-8 mt-4">
+        <div className="flex justify-center items-center px-8">
           <Timer onComplete={handleTimerComplete} isPaused={isPopupOpen || isSubmitting} isFinished={isQuizCompleted} />
         </div>
-        <div className="absolute top-[33%] left-0 w-full px-8">
+        <div className="absolute top-[260px] left-0 w-full px-8">
           {isQuizCompleted ? (
             <QuizCompletion
               setCompletionContentPopup={handleCompletionContentClick}

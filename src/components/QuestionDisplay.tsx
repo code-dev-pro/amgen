@@ -7,8 +7,8 @@ export const QuestionDisplay = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <div className="bg-accent-blue bg-opacity-25 px-10 py-6">
-      <p className="text-3xl font-bold" dangerouslySetInnerHTML={sanitize(currentQuestion?.libelle)} />
+    <div className="bg-accent-blue bg-opacity-25 px-8 py-6">
+      <p className="text-xl font-bold" dangerouslySetInnerHTML={sanitize(currentQuestion?.libelle)} />
       <ul className="text-lg pl-8 mt-4 space-y-4">
         {currentQuestion?.propositions.map((proposition) => (
           <li key={proposition.id} className="flex items-center">
@@ -18,7 +18,7 @@ export const QuestionDisplay = () => {
               checked={selectedAnswers.some((answer) => answer.id === proposition.id)}
               onChange={(isChecked) => selectAnswer(proposition, isChecked)}
               size="sm"
-              fontSize="text-lg"
+              fontSize="text-sm"
               shape="square"
               labelColor="white"
               isAnswerShown={isAnswerShown}

@@ -16,6 +16,7 @@ import { STORAGE_KEYS } from '../utils/variables';
 
 import backgroundImage from '/images/fond_accueil.jpg';
 import logo from '/images/logo.svg';
+import { useQuizPreloader } from '../hooks/useQuizPreloader';
 
 const Home = () => {
   const { resetTimer } = useIdleTimer();
@@ -34,6 +35,8 @@ const Home = () => {
     gcTime: Infinity,
   });
 
+  useQuizPreloader(data);
+
   const checkAndSubmitStoredAnswers = useCallback(() => {
     const storedAnswers = localStorage.getItem(STORAGE_KEYS.QUIZ_ANSWERS);
     if (storedAnswers) {
@@ -46,37 +49,6 @@ const Home = () => {
   useEffect(() => {
     if (data && (!quizData || quizData.version !== data.version)) {
       setQuizData(data);
-
-      const imageUrls = data.themes
-        .flatMap((theme) => theme.questions)
-        .map((question) => question.feedbackImage)
-        .filter(Boolean);
-
-      const cacheImages = async () => {
-        const cache = await caches.open('quiz-images');
-
-        for (const url of imageUrls) {
-          try {
-            let response = await cache.match(url);
-            if (response) {
-              console.log(`L'image ${url} est déjà en cache.`);
-            } else {
-              console.log(`L'image ${url} n'est pas en cache. Téléchargement...`);
-              response = await fetch(url, { mode: 'no-cors' });
-              if (response) {
-                await cache.put(url, response);
-                console.log(`Image mise en cache : ${url}`);
-              } else {
-                console.error(`Échec du chargement de l'image: ${url}`);
-              }
-            }
-          } catch (error) {
-            console.error(`Erreur lors de la gestion de l'image: ${url}`, error);
-          }
-        }
-      };
-
-      cacheImages();
     }
   }, [data, quizData, setQuizData]);
 

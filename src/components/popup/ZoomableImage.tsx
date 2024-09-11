@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { TransformWrapper, TransformComponent, useControls } from 'react-zoom-pan-pinch';
 
 const Controls = () => {
@@ -51,42 +50,13 @@ const Controls = () => {
 };
 
 export const ZoomableImage = ({ imageUrl, imageAlt }: { imageUrl: string; imageAlt: string }) => {
-  const [cachedSrc, setCachedSrc] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const checkCacheAndLoadImage = async () => {
-      try {
-        const cache = await caches.open('quiz-images');
-        const cachedResponse = await cache.match(imageUrl);
-        if (cachedResponse) {
-          setCachedSrc(imageUrl);
-        } else {
-          setCachedSrc(null);
-        }
-      } catch (err) {
-        setError(true);
-        console.error(`Erreur lors de la vérification du cache pour ${imageUrl}`, err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkCacheAndLoadImage();
-  }, [imageUrl, cachedSrc]);
-
-  if (loading) return <div>Chargement de l'image...</div>;
-  if (error) return <div>Impossible de charger l'image.</div>;
-  if (!cachedSrc) return <div>Image non disponible en cache.</div>;
-
   return (
     <div className="flex justify-center items-center mt-4 w-full h-full max-w-[845px] max-h-[500px]">
       <TransformWrapper initialScale={1} minScale={1} maxScale={2}>
         <Controls />
         <TransformComponent>
           <div className="flex justify-center items-center w-full h-full">
-            <img src={cachedSrc} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
+            <img src={imageUrl} alt={imageAlt} className="max-w-[845px] max-h-[500px]" />
           </div>
         </TransformComponent>
       </TransformWrapper>

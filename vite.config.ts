@@ -45,9 +45,26 @@ export default defineConfig({
       },
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Mon Application PWA',
-        short_name: 'PWA App',
-        description: 'Ma super application PWA',
+        name: 'Explor AMGEN',
+        short_name: 'Explor AMGEN',
+        description: 'Application ed quiz pour AMGEN',
+        icons: [
+          {
+            src: 'favicon.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
+          },
+          {
+            src: 'apple-touch-icon.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: 'masked-icon.svg',
+            sizes: '512x512',
+            type: 'image/svg+xml',
+          },
+        ],
         theme_color: '#ffffff',
         start_url: '/amgen/',
         scope: '/amgen/',

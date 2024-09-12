@@ -6,6 +6,7 @@ import { LongPressButton } from '../components/buttons/LongPressButton';
 import { PinInput } from '../components/PinInput';
 import { Footer } from '../components/Footer';
 import { useIdleTimer } from '../hooks/useIdleTimer';
+import { useQuizPreloader } from '../hooks/useQuizPreloader';
 import { useSubmitAnswers } from '../hooks/useSubmitAnswers';
 import { useCSVDownload } from '../hooks/useCSVDownload';
 import { useQuizDataStore } from '../stores/dataStore';
@@ -16,7 +17,6 @@ import { STORAGE_KEYS } from '../utils/variables';
 
 import backgroundImage from '/images/fond_accueil.jpg';
 import logo from '/images/logo.svg';
-import { useQuizPreloader } from '../hooks/useQuizPreloader';
 
 const Home = () => {
   const { resetTimer } = useIdleTimer();

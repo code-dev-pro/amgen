@@ -21,12 +21,11 @@ import { sanitize } from '../utils/helpers';
 import { useQuizNavigation } from '../hooks/useQuizNavigation';
 
 const Quiz = () => {
-  const { quizTitle, questions, currentQuestionIndex, isQuizCompleted } = useQuizStore();
+  const { quizTitle, questions, currentQuestionIndex, isQuizCompleted, isAnswerShown } = useQuizStore();
   const { resetProgress } = useUserProgressStore();
   const { isPopupOpen, openPopup } = usePopupStore();
   const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
-
   const { handleTimerComplete, isSubmitting } = useQuizNavigation();
 
   const handleLearnMoreClick = () => {
@@ -71,7 +70,11 @@ const Quiz = () => {
           <MountainPath numQuestions={questions.length} currentQuestionIndex={currentQuestionIndex} />
         </div>
         <div className="flex justify-center items-center px-8">
-          <Timer onComplete={handleTimerComplete} isPaused={isPopupOpen || isSubmitting} isFinished={isQuizCompleted} />
+          <Timer
+            onComplete={handleTimerComplete}
+            isPaused={isPopupOpen || isSubmitting || isAnswerShown}
+            isFinished={isQuizCompleted}
+          />
         </div>
         <div className="absolute top-[260px] left-0 w-full px-8">
           {isQuizCompleted ? (

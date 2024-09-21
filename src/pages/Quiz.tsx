@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuizStore } from '../stores/quizStore';
-import { usePopupStore } from '../stores/popupStore';
+import { PopupType, usePopupStore } from '../stores/popupStore';
 import { useUserProgressStore } from '../stores/userProgressStore';
 import { Header } from '../components/Header';
 import { MountainPath } from '../components/progressTracker/MountainPath';
@@ -12,21 +12,19 @@ import { QuizNavigation } from '../components/QuizNavigation';
 import { Footer } from '../components/Footer';
 import { QuizCompletion } from '../components/QuizCompletion';
 import { Popup } from '../components/popup/Popup';
-import { Form } from '../components/popup/Form';
-import { PlainText } from '../components/popup/PlainText';
-import { ZoomableImage } from '../components/popup/ZoomableImage';
 import { Modal } from '../components/Modal';
 import { Routes } from '../utils/routes';
 import { sanitize } from '../utils/helpers';
 import { useQuizNavigation } from '../hooks/useQuizNavigation';
 
 const Quiz = () => {
-  const { quizTitle, questions, currentQuestionIndex, isQuizCompleted, isAnswerShown } = useQuizStore();
+  const navigate = useNavigate();
   const { resetProgress } = useUserProgressStore();
   const { isPopupOpen, openPopup } = usePopupStore();
+  const { isSubmitting, handleTimerComplete } = useQuizNavigation();
+  const { quizTitle, questions, currentQuestionIndex, isQuizCompleted, isAnswerShown } = useQuizStore();
+
   const [isModalOpen, setModalOpen] = useState(false);
-  const navigate = useNavigate();
-  const { handleTimerComplete, isSubmitting } = useQuizNavigation();
 
   const handleLearnMoreClick = () => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -34,38 +32,28 @@ const Quiz = () => {
 
     const hasValidText = currentQuestion.feedbackText && currentQuestion.feedbackText.trim() !== '';
     const hasValidImage = currentQuestion.feedbackImage && currentQuestion.feedbackImage.trim() !== '';
-
-    const content = hasValidText ? (
-      <PlainText text={currentQuestion.feedbackText ?? ''} />
-    ) : hasValidImage ? (
-      <ZoomableImage imageUrl={currentQuestion.feedbackImage} imageAlt="image de feedback" />
-    ) : null;
-
-    if (content) openPopup('learnMore', content);
+    if (hasValidText) {
+      openPopup({ type: PopupType.Text, text: currentQuestion.feedbackText ?? '' });
+    }
+    if (hasValidImage) {
+      openPopup({ type: PopupType.Image, imageUrl: currentQuestion.feedbackImage, imageAlt: 'Feedback Image' });
+    }
   };
 
-  const handleCompletionContentClick = () => {
-    openPopup('form', <Form />);
-  };
-
-  const handleStopClick = () => {
-    setModalOpen(true);
-  };
-
-  const handleCancel = () => {
+  const onCancel = () => {
     setModalOpen(false);
   };
 
-  const handleConfirm = () => {
+  const onConfirm = () => {
     resetProgress();
-    navigate(Routes.Home);
     setModalOpen(false);
+    navigate(Routes.Home);
   };
 
   return (
     <>
       <div className={clsx('relative min-h-dvh w-screen z-0', { 'blur-sm': isPopupOpen })}>
-        <Header onClick={() => handleStopClick()} />
+        <Header onClick={() => setModalOpen(true)} />
         <div className="absolute top-0 right-0">
           <MountainPath numQuestions={questions.length} currentQuestionIndex={currentQuestionIndex} />
         </div>
@@ -78,11 +66,7 @@ const Quiz = () => {
         </div>
         <div className="absolute top-[260px] left-0 w-full px-8">
           {isQuizCompleted ? (
-            <QuizCompletion
-              setCompletionContentPopup={handleCompletionContentClick}
-              mountainName={quizTitle}
-              onStopClick={handleStopClick}
-            />
+            <QuizCompletion mountainName={quizTitle} onStopClick={() => setModalOpen(true)} />
           ) : (
             <>
               <QuestionDisplay />
@@ -99,11 +83,12 @@ const Quiz = () => {
         <Footer />
       </div>
 
-      {isPopupOpen && <Popup>{usePopupStore.getState().popupContent}</Popup>}
+      {isPopupOpen && <Popup />}
+
       <Modal
         isOpen={isModalOpen}
-        onConfirm={handleConfirm}
-        onCancel={handleCancel}
+        onCancel={onCancel}
+        onConfirm={onConfirm}
         title="Êtes-vous sûr de vouloir arrêter le quiz ?"
         confirmText="Oui, arrêter"
       />

@@ -1,32 +1,25 @@
 import { useNavigate } from 'react-router-dom';
-import { usePopupStore } from '../stores/popupStore';
+import { PopupType, usePopupStore } from '../stores/popupStore';
 import { useUserProgressStore } from '../stores/userProgressStore';
-import { Form } from './popup/Form';
 import { Routes } from '../utils/routes';
 
 interface QuizCompletionProps {
   mountainName: string;
-  setCompletionContentPopup: () => void;
   onStopClick: () => void;
 }
 
-export const QuizCompletion = ({ setCompletionContentPopup, mountainName, onStopClick }: QuizCompletionProps) => {
+export const QuizCompletion = ({ mountainName, onStopClick }: QuizCompletionProps) => {
   const navigate = useNavigate();
   const { openPopup } = usePopupStore();
   const { markMountainAsCompleted } = useUserProgressStore();
 
-  const handleClick = () => {
+  const onExploreClick = () => {
     markMountainAsCompleted(mountainName);
     navigate(Routes.Menu);
   };
 
-  const handleCompletionClick = () => {
-    setCompletionContentPopup();
-    openPopup('form', <Form />);
-  };
-
-  const handleStopClick = () => {
-    onStopClick();
+  const onFormClick = () => {
+    openPopup({ type: PopupType.Form });
   };
 
   return (
@@ -37,7 +30,7 @@ export const QuizCompletion = ({ setCompletionContentPopup, mountainName, onStop
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0 sm:space-x-8">
           <button
             className="bg-primary-light-blue text-primary-dark-blue text-sm shadow-lg flex items-center justify-between text-left w-full sm:w-[373px] h-[46px] px-2"
-            onClick={handleCompletionClick}
+            onClick={onFormClick}
           >
             <span className="flex-1">Je souhaite soumettre une demande d'information médicale</span>
             <div className="ml-2">
@@ -57,7 +50,7 @@ export const QuizCompletion = ({ setCompletionContentPopup, mountainName, onStop
           </button>
           <button
             className="bg-primary-light-blue text-primary-dark-blue text-sm shadow-lg flex items-center justify-between text-left w-full sm:w-[373px] h-[46px] px-2"
-            onClick={handleClick}
+            onClick={onExploreClick}
           >
             <span className="flex-1">Je souhaite explorer d'autres monts</span>
             <div className="ml-2">
@@ -79,7 +72,7 @@ export const QuizCompletion = ({ setCompletionContentPopup, mountainName, onStop
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0 sm:space-x-8">
           <button
             className="bg-primary-light-blue text-primary-dark-blue text-sm shadow-lg flex items-center justify-between text-left w-full sm:w-[373px] h-[46px] px-2"
-            onClick={handleStopClick}
+            onClick={onStopClick}
           >
             <span className="flex-1">Je souhaite arrêter le quiz</span>
             <div className="ml-2">

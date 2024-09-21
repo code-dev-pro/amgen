@@ -62,8 +62,6 @@ const Home = () => {
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
-    if (navigator.onLine) checkAndSubmitStoredAnswers();
-
     return () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
@@ -77,15 +75,9 @@ const Home = () => {
   };
 
   const renderExploreButton = () => {
-    if (isLoading) {
-      return <p>Chargement des données...</p>;
-    }
-    if (!isOnline && !isDataLoaded) {
-      return <p>Merci de vous connecter à Internet pour accéder au quiz.</p>;
-    }
-    if (error) {
-      return <p>Une erreur est survenue. Veuillez réessayer.</p>;
-    }
+    if (isLoading) return <p>Chargement des données...</p>;
+    if (!isOnline && !isDataLoaded) return <p>Merci de vous connecter à Internet pour accéder au quiz.</p>;
+    if (error) return <p>Une erreur est survenue. Veuillez réessayer.</p>;
     return <ExploreButton onClick={handleExploreButtonClick} />;
   };
 

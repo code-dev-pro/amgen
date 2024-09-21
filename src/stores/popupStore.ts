@@ -1,20 +1,26 @@
 import { create } from 'zustand';
-import { ReactNode } from 'react';
 
-type PopupType = 'form' | 'learnMore' | null;
+export enum PopupType {
+  Form = 'form',
+  Text = 'text',
+  Image = 'image',
+}
+
+type PopupContent =
+  | { type: PopupType.Form }
+  | { type: PopupType.Text; text: string }
+  | { type: PopupType.Image; imageUrl: string; imageAlt: string };
 
 interface PopupState {
   isPopupOpen: boolean;
-  popupType: PopupType;
-  popupContent: ReactNode | null;
-  openPopup: (type: PopupType, content: ReactNode) => void;
+  popupContent: PopupContent | null;
+  openPopup: (content: PopupContent) => void;
   closePopup: () => void;
 }
 
 export const usePopupStore = create<PopupState>()((set) => ({
   isPopupOpen: false,
-  popupType: null,
   popupContent: null,
-  openPopup: (type, content) => set({ isPopupOpen: true, popupType: type, popupContent: content }),
-  closePopup: () => set({ isPopupOpen: false, popupType: null, popupContent: null }),
+  openPopup: (content) => set({ isPopupOpen: true, popupContent: content }),
+  closePopup: () => set({ isPopupOpen: false, popupContent: null }),
 }));

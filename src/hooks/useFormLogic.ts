@@ -27,8 +27,8 @@ export const useFormLogic = () => {
     resolver: zodResolver(schema),
   });
 
-  const addFormData = useFormStore((state) => state.addFormData);
   const { quizData } = useQuizDataStore();
+  const { addFormData } = useFormStore();
 
   const onSubmit = async (data: FormData) => {
     if (quizData?.published === 1) {

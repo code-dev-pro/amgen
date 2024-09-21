@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useQuizStore } from '../stores/quizStore';
-import type { QuizAnswer } from '../types';
 import { useQuizDataStore } from '../stores/dataStore';
+import type { QuizAnswer } from '../types';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const apiUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
@@ -23,8 +23,8 @@ async function submitAnswers(answers: QuizAnswer[]) {
 }
 
 export function useSubmitAnswers() {
-  const { clearQuizAnswers } = useQuizStore();
   const { quizData } = useQuizDataStore();
+  const { clearQuizAnswers } = useQuizStore();
 
   return useMutation({
     mutationFn: (answers: QuizAnswer[]) => {

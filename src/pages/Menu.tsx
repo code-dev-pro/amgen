@@ -3,11 +3,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Footer } from '../components/Footer';
 import { Popup } from '../components/popup/Popup';
-import { Form } from '../components/popup/Form';
 import { MountainButton } from '../components/buttons/MountainButton';
 import { useQuizNavigation } from '../hooks/useQuizNavigation';
 import { useQuizDataStore } from '../stores/dataStore';
-import { usePopupStore } from '../stores/popupStore';
+import { PopupType, usePopupStore } from '../stores/popupStore';
 import { useUserProgressStore } from '../stores/userProgressStore';
 import { Routes } from '../utils/routes';
 import { mountainStyles, SURPRISE_EXPLORATION, surpriseExplorerTheme } from '../utils/variables';
@@ -91,7 +90,7 @@ const Menu = () => {
             width={26}
             height={26}
             className="cursor-pointer"
-            onClick={() => openPopup('form', <Form />)}
+            onClick={() => openPopup({ type: PopupType.Form })}
           />
           <Link to={Routes.Home} onClick={resetProgress}>
             <img src={homeIcon} alt="Accueil" width={26} height={26} />
@@ -101,7 +100,7 @@ const Menu = () => {
         {renderMountainButtons}
       </div>
 
-      {isPopupOpen && <Popup>{usePopupStore.getState().popupContent}</Popup>}
+      {isPopupOpen && <Popup />}
       <Footer />
     </div>
   );

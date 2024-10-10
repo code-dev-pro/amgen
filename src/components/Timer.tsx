@@ -7,8 +7,8 @@ interface TimerProps {
 }
 
 export const Timer = ({ onComplete, isPaused, isFinished }: TimerProps) => {
-  const [timeLeft, setTimeLeft] = useState(180);
-  const totalDuration = 180;
+  const [timeLeft, setTimeLeft] = useState(10);
+  const totalDuration = 10;
 
   const resetTimer = useCallback(() => {
     setTimeLeft(0);

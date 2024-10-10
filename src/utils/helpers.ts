@@ -36,6 +36,24 @@ export const fetchData = async (): Promise<Themes> => {
   return response.json();
 };
 
+export const fetchDataWithId = async (id: string): Promise<Themes> => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const apiUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const response = await fetch(`${apiUrl}/api/amgen/getConteneur/${id}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch data with ID');
+  }
+
+  return response.json();
+};
+
 /**************************************************************************
   Submit answers
 ******************************************************************************/

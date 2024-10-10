@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ExploreButton } from '../components/buttons/ExploreButton';
 import { LongPressButton } from '../components/buttons/LongPressButton';
 import { PinInput } from '../components/PinInput';
@@ -12,14 +11,15 @@ import { useCSVDownload } from '../hooks/useCSVDownload';
 import { useQuizDataStore } from '../stores/dataStore';
 import { useQuizStore } from '../stores/quizStore';
 import { Routes } from '../utils/routes';
-import { fetchData } from '../utils/helpers';
 import { STORAGE_KEYS } from '../utils/variables';
 
 import backgroundImage from '/images/fond_accueil.jpg';
 import logo from '/images/logo.svg';
+import { useQuizData } from '../hooks/useQuizData';
 
 const Home = () => {
   const { resetTimer } = useIdleTimer();
+  const location = useLocation();
   const navigate = useNavigate();
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const { quizData, setQuizData, isDataLoaded } = useQuizDataStore();
@@ -27,13 +27,11 @@ const Home = () => {
   const { resetQuiz } = useQuizStore();
   const { handleLongPress, showPinInput, handlePinSubmit, handlePinCancel } = useCSVDownload();
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['quizData'],
-    queryFn: fetchData,
-    enabled: navigator.onLine,
-    staleTime: 1000 * 60 * 5,
-    gcTime: Infinity,
-  });
+  const queryParams = new URLSearchParams(location.search);
+  const mode = queryParams.get('mode');
+  const contid = queryParams.get('contid');
+
+  const { isLoading, error, data } = useQuizData(mode, contid);
 
   useQuizPreloader(data);
 
@@ -77,7 +75,7 @@ const Home = () => {
   const renderExploreButton = () => {
     if (isLoading) return <p>Chargement des données...</p>;
     if (!isOnline && !isDataLoaded) return <p>Merci de vous connecter à Internet pour accéder au quiz.</p>;
-    if (error) return <p>Une erreur est survenue. Veuillez réessayer.</p>;
+    if (error) return <p>Une erreur est survenue : {error.message}</p>;
     return <ExploreButton onClick={handleExploreButtonClick} />;
   };
 

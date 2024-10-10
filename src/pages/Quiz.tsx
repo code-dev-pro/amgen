@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuizNavigation } from '../hooks/useQuizNavigation';
 import { useQuizStore } from '../stores/quizStore';
 import { PopupType, usePopupStore } from '../stores/popupStore';
 import { useUserProgressStore } from '../stores/userProgressStore';
@@ -15,7 +16,6 @@ import { Popup } from '../components/popup/Popup';
 import { Modal } from '../components/Modal';
 import { Routes } from '../utils/routes';
 import { sanitize } from '../utils/helpers';
-import { useQuizNavigation } from '../hooks/useQuizNavigation';
 
 const Quiz = () => {
   const navigate = useNavigate();

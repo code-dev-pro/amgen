@@ -42,8 +42,7 @@ export default defineConfig(({ mode }) => {
               },
             },
           ],
-          navigateFallback: '/amgen/index.html',
-          navigateFallbackAllowlist: [/^\/amgen\//],
+          navigateFallback: '/index.html',
         },
         includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
         manifest: {
@@ -68,12 +67,11 @@ export default defineConfig(({ mode }) => {
             },
           ],
           theme_color: '#ffffff',
-          start_url: '/amgen/',
-          scope: '/amgen/',
+          start_url: '/',
+          scope: '/',
           display: 'standalone',
         },
       }),
     ],
-    base: '/amgen/',
   };
 });

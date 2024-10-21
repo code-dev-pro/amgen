@@ -11,47 +11,42 @@ const Home = lazy(() => import('./pages/Home'));
 const Menu = lazy(() => import('./pages/Menu'));
 const Quiz = lazy(() => import('./pages/Quiz'));
 
-const router = createBrowserRouter(
-  [
-    {
-      element: <Layout />,
-      errorElement: <ErrorPage />,
-      children: [
-        {
-          path: Routes.Home,
-          element: (
-            <Suspense fallback={<Loader />}>
-              <Home />
-            </Suspense>
-          ),
-        },
-        {
-          path: Routes.Menu,
-          element: (
-            <Suspense fallback={<Loader />}>
-              <RedirectWrapper>
-                <Menu />
-              </RedirectWrapper>
-            </Suspense>
-          ),
-        },
-        {
-          path: Routes.Quiz,
-          element: (
-            <Suspense fallback={<Loader />}>
-              <RedirectWrapper>
-                <Quiz />
-              </RedirectWrapper>
-            </Suspense>
-          ),
-        },
-      ],
-    },
-  ],
+const router = createBrowserRouter([
   {
-    basename: Routes.Base,
-  }
-);
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: Routes.Home,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Home />
+          </Suspense>
+        ),
+      },
+      {
+        path: Routes.Menu,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <RedirectWrapper>
+              <Menu />
+            </RedirectWrapper>
+          </Suspense>
+        ),
+      },
+      {
+        path: Routes.Quiz,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <RedirectWrapper>
+              <Quiz />
+            </RedirectWrapper>
+          </Suspense>
+        ),
+      },
+    ],
+  },
+]);
 
 function App() {
   const queryClient = new QueryClient();
